@@ -36,7 +36,7 @@ const frames = [
 ];
 
 const stats = [
-  { value: "3:10", label: "trajao je prvi film" },
+  { value: "3:10", label: "trajanje filma" },
   { value: "16", label: "animiranih scena" },
   { value: "1", label: "glavni junak" },
 ];
@@ -56,7 +56,7 @@ export function FilmAnatomy() {
     <section aria-labelledby="film-title" className="relative overflow-hidden bg-grape pb-24 pt-16 text-cream md:pb-32">
       <Wave fill="var(--color-grape)" />
       <div className="mx-auto max-w-6xl px-4">
-        <div className="grid gap-6 md:grid-cols-[1.2fr_1fr] md:items-end">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:items-end">
           <div>
             <p className="eyebrow !text-sun">šta dobijate</p>
             <h2 id="film-title" className="mt-2 text-4xl font-extrabold leading-[1.05] sm:text-5xl">
@@ -64,7 +64,7 @@ export function FilmAnatomy() {
             </h2>
           </div>
           <p className="text-lg text-cream/80 md:pb-1">
-            Ovo su kadrovi iz prvog filma. Ne niz slika sa muzikom, nego film koji teče kao pravi crtać: scene se
+            Ovo su pravi kadrovi iz jednog našeg filma. Ne niz slika sa muzikom, nego film koji teče kao pravi crtać: scene se
             pretapaju, a junaci se kreću, smiju i pričaju.
           </p>
         </div>

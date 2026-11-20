@@ -8,7 +8,7 @@ export const steps = [
   },
   {
     title: "Mi pravimo film",
-    text: "Pišemo priču, crtamo likove, snimamo naraciju i biramo muziku. Vi samo čekate.",
+    text: "Pišemo priču i režiramo scene, a likove, animaciju i muziku pravimo uz pomoć AI alata. Vi samo čekate.",
   },
   {
     title: "Film stiže na vaš telefon",
@@ -59,7 +59,11 @@ export const faq = [
   },
   {
     q: "Možete li ubaciti Elzu, Paw Patrol ili Spajdermena?",
-    a: "Ne. Ti likovi su zaštićeni autorskim pravima. Umjesto toga pravimo originalne junake po ukusu vašeg djeteta, pa film ne liči ni na jedan drugi.",
+    a: "Ne. Ti likovi su zaštićeni autorskim pravima. Umjesto toga osmišljavamo originalne junake po ukusu vašeg djeteta, pa film ne liči ni na jedan drugi.",
+  },
+  {
+    q: "Da li koristite vještačku inteligenciju?",
+    a: "Da. Priču pišemo i režiramo mi, a slike, animaciju, glas naratora i muziku pravimo uz pomoć AI alata na plaćenim, komercijalnim planovima. Svaki kadar pregledamo i biramo, a scene koje ne valjaju pravimo ponovo, dok film ne bude kako treba.",
   },
   {
     q: "Šta ako mi se nešto ne svidi?",

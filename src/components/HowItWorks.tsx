@@ -50,12 +50,12 @@ export function HowItWorks() {
 
       gsap.utils.toArray<HTMLElement>("[data-step]").forEach((el, i) => {
         gsap.from(el, {
-          y: 50,
+          y: 40,
           opacity: 0,
           rotate: i % 2 ? 3 : -3,
-          duration: 0.7,
+          duration: 0.6,
           ease: "back.out(1.6)",
-          scrollTrigger: { trigger: el, start: "top 85%" },
+          scrollTrigger: { trigger: el, start: "top 92%", once: true },
         });
       });
     }, root);
@@ -78,7 +78,7 @@ export function HowItWorks() {
         </h2>
 
         <div data-track-wrap className="relative mt-14">
-          <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-16 md:left-1/2 md:-translate-x-1/2">
+          <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 -left-1 w-11 md:left-1/2 md:w-16 md:-translate-x-1/2">
             <svg className="h-full w-full overflow-visible" viewBox="0 0 60 1000" preserveAspectRatio="none">
               <path
                 data-track
@@ -102,7 +102,7 @@ export function HowItWorks() {
                 strokeLinecap="round"
               />
             </svg>
-            <div data-walker className="absolute left-0 top-0 w-16 md:w-20">
+            <div data-walker className="absolute left-0 top-0 w-12 md:w-20">
               <Dino className="animate-bob" />
             </div>
           </div>
@@ -112,9 +112,9 @@ export function HowItWorks() {
               <li
                 key={s.title}
                 data-step
-                className={`pl-20 md:w-[calc(50%-3.5rem)] md:pl-0 ${i % 2 ? "md:ml-auto" : ""}`}
+                className={`pl-12 md:w-[calc(50%-3.5rem)] md:pl-0 ${i % 2 ? "md:ml-auto" : ""}`}
               >
-                <div className="card p-6 md:p-7">
+                <div className="card p-5 md:p-7">
                   <span
                     className={`inline-flex size-12 items-center justify-center rounded-full border-[3px] border-grape font-display text-2xl font-bold ${badge[i]}`}
                   >

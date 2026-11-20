@@ -28,7 +28,7 @@ export function Hero() {
         <Cloud />
       </Floaty>
 
-      <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-4 md:grid-cols-[1.05fr_1fr] md:gap-10">
+      <div className="relative mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] items-center gap-14 px-4 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] md:gap-10">
         <div>
           <p className="eyebrow mb-4 flex items-center gap-2">
             <Sparkle className="size-5 text-sun" />
@@ -45,11 +45,11 @@ export function Hero() {
             Animirani film u kojem vaše dijete spašava, leti i istražuje. Sa svojim imenom, omiljenim stvarima i
             naracijom na našem jeziku.
           </p>
-          <div className="mt-9 flex flex-wrap items-center gap-4">
-            <a href="#naruci" className="btn btn-primary sticker animate-wiggle">
+          <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
+            <a href="#naruci" className="btn btn-primary sticker w-full animate-wiggle sm:w-auto">
               Naruči film
             </a>
-            <a href="#primjer" className="btn btn-secondary sticker">
+            <a href="#primjer" className="btn btn-secondary sticker w-full sm:w-auto">
               <Play className="size-5" aria-hidden="true" />
               Pogledaj primjer
             </a>
@@ -66,7 +66,7 @@ export function Hero() {
 
         <div id="primjer" className="relative scroll-mt-10">
           <p className="hand absolute -top-11 left-2 z-10 rotate-[-4deg] text-2xl text-grape md:-left-6 md:-top-12 md:text-[1.7rem]">
-            prvi film: za rođendan mog sestrića
+            isječak iz pravog filma
           </p>
           <ArrowCurl className="absolute -top-6 right-[12%] z-10 hidden w-16 rotate-[8deg] text-grape md:block" />
 
@@ -96,7 +96,7 @@ export function Hero() {
             </div>
             <Sprockets />
             <div className="flex items-center justify-between gap-3 border-t-2 border-dashed border-cream/25 px-5 py-3 text-cream">
-              <p className="truncate font-display text-base font-semibold leading-tight sm:text-lg">
+              <p className="min-w-0 truncate font-display text-base font-semibold leading-tight sm:text-lg">
                 {site.filmTitle} <span className="font-sans text-sm font-semibold text-cream/70">· 3:10</span>
               </p>
               <p className="whitespace-nowrap rounded-full bg-sun px-3 py-0.5 text-xs font-extrabold text-ink sm:text-sm">

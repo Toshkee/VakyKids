@@ -85,3 +85,29 @@ export function Cloud({ className }: Props) {
     </svg>
   );
 }
+
+export function Planet({ className }: Props) {
+  return (
+    <svg viewBox="0 0 120 80" className={className} aria-hidden="true">
+      <ellipse cx="60" cy="42" rx="56" ry="13" fill="none" stroke="#FFD84D" strokeWidth="5" transform="rotate(-12 60 42)" />
+      <circle cx="60" cy="40" r="26" fill="#FF8A7A" />
+      <circle cx="51" cy="32" r="5" fill="#FFB3C1" />
+      <circle cx="68" cy="48" r="3.5" fill="#FFB3C1" />
+      <path d="M8 50 A 56 13 -12 0 0 112 28" fill="none" stroke="#FFD84D" strokeWidth="5" transform="rotate(-12 60 42)" />
+    </svg>
+  );
+}
+
+export function Chest({ className }: Props) {
+  return (
+    <svg viewBox="0 0 100 80" className={className} aria-hidden="true">
+      <circle cx="30" cy="22" r="7" fill="#FFD84D" stroke="#3A2A6B" strokeWidth="2.5" />
+      <circle cx="50" cy="16" r="7" fill="#FFD84D" stroke="#3A2A6B" strokeWidth="2.5" />
+      <circle cx="69" cy="22" r="7" fill="#FFD84D" stroke="#3A2A6B" strokeWidth="2.5" />
+      <path d="M12 34 Q50 8 88 34 Z" fill="#B5652A" stroke="#3A2A6B" strokeWidth="3" strokeLinejoin="round" />
+      <rect x="12" y="34" width="76" height="40" rx="4" fill="#C9773A" stroke="#3A2A6B" strokeWidth="3" />
+      <rect x="12" y="44" width="76" height="6" fill="#8A4A1E" />
+      <rect x="43" y="38" width="14" height="18" rx="3" fill="#FFD84D" stroke="#3A2A6B" strokeWidth="2.5" />
+    </svg>
+  );
+}

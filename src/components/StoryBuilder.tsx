@@ -104,8 +104,8 @@ export function StoryBuilder() {
           Odgovorite na par pitanja, a mi ćemo vašu poruku pripremiti za WhatsApp. Fotografije šaljete tek tamo.
         </p>
 
-        <form onSubmit={onSubmit} noValidate className="card sticker mt-10 space-y-8 !border-[3px] p-6 md:p-10">
-          <div className="grid gap-6 sm:grid-cols-[1fr_auto]">
+        <form onSubmit={onSubmit} noValidate className="card sticker mt-10 space-y-8 !border-[3px] p-5 sm:p-6 md:p-10">
+          <div className="grid grid-cols-[minmax(0,1fr)] gap-6 sm:grid-cols-[minmax(0,1fr)_auto]">
             <div>
               <label htmlFor={ids.name} className={labelCls}>
                 Kako se zove vaš mali junak?

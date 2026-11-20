@@ -13,7 +13,7 @@ export function Packages() {
   return (
     <section id="paketi" aria-labelledby="paketi-title" className="relative bg-sun-soft pb-24 pt-16 md:pb-32">
       <Wave fill="var(--color-sun-soft)" />
-      <Floaty speed={0.9} className="right-[5%] top-10 w-12 md:w-16">
+      <Floaty speed={0.9} className="right-[5%] top-10 hidden w-16 sm:block">
         <Balloon />
       </Floaty>
       <Floaty speed={0.5} className="left-[4%] bottom-16 hidden w-14 md:block">
@@ -49,7 +49,7 @@ export function Packages() {
             return (
               <li key={p.id} className={`relative ${p.popular ? "md:-mt-4" : ""}`}>
                 {p.popular && (
-                  <span className="absolute -right-3 -top-9 z-10 flex size-20 rotate-12 items-center justify-center rounded-full border-[3px] border-grape bg-coral-deep text-center font-display text-[13px] font-semibold leading-tight text-white shadow-sticker">
+                  <span className="absolute -right-1 -top-9 z-10 flex size-20 rotate-12 sm:-right-3 items-center justify-center rounded-full border-[3px] border-grape bg-coral-deep text-center font-display text-[13px] font-semibold leading-tight text-white shadow-sticker">
                     Najpopu&shy;larniji
                   </span>
                 )}

@@ -7,7 +7,7 @@ export function Faq() {
   return (
     <section id="pitanja" aria-labelledby="pitanja-title" className="relative bg-sky-soft pb-24 pt-16 md:pb-32">
       <Wave fill="var(--color-sky-soft)" />
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
+      <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-10 px-4 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-16">
         <div className="md:sticky md:top-10 md:self-start">
           <p className="eyebrow">pitate, odgovaramo</p>
           <h2 id="pitanja-title" className="mt-2 text-4xl font-extrabold leading-[1.05] sm:text-5xl">
