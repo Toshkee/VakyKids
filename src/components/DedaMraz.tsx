@@ -1,15 +1,15 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useId } from "react";
 import { Check, Gift, MessageCircle } from "lucide-react";
 import { formatPrice, holidayOffer, waLink } from "@/config/site";
+import { PackageButton } from "./PackageButton";
+import { useHero } from "@/lib/hero";
 import { Spica, type SpicaTheme } from "./Spica";
 import { Wave } from "./Wave";
 
-const DEFAULT_NAME = "Mila";
 const BG = "#16244f";
 
-const capitalize = (s: string) => (s ? s[0].toLocaleUpperCase("sr") + s.slice(1) : s);
 
 const theme: SpicaTheme = {
   id: "deda-mraz",
@@ -40,11 +40,11 @@ const flakes = Array.from({ length: 36 }, (_, i) => ({
 
 /* Holiday offer: a short film in which Deda Mraz greets the child by name. */
 export function DedaMraz() {
-  const [name, setName] = useState("");
+  // The same name as in the hero: typing it here changes it everywhere.
+  const { raw, setRaw, name, shown } = useHero();
   const inputId = useId();
-  const shown = capitalize(name.trim()) || DEFAULT_NAME;
   const order = waLink(
-    `Zdravo! Želim ${holidayOffer.name[0].toLowerCase()}${holidayOffer.name.slice(1)}${name.trim() ? ` za dijete po imenu ${shown}` : ""}. Kako da naručim?`,
+    `Zdravo! Želim ${holidayOffer.name[0].toLowerCase()}${holidayOffer.name.slice(1)}${name ? ` za dijete po imenu ${name}` : ""}. Kako da naručim?`,
   );
 
   return (
@@ -111,11 +111,11 @@ export function DedaMraz() {
           <input
             id={inputId}
             type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={raw}
+            onChange={(e) => setRaw(e.target.value)}
             maxLength={14}
             autoComplete="off"
-            placeholder={DEFAULT_NAME}
+            placeholder="npr. Luka"
             className="mt-2 w-full rounded-2xl border-[3px] border-grape bg-white px-5 py-3 font-display text-2xl font-bold text-grape shadow-[5px_5px_0_0_#0b1430] outline-none placeholder:text-grape/35 focus-visible:shadow-[5px_5px_0_0_var(--color-coral-deep)]"
           />
 
@@ -127,11 +127,16 @@ export function DedaMraz() {
               </p>
               <p className="mt-0.5 text-sm font-semibold text-cream/75">Naručite do {holidayOffer.orderBy}</p>
             </div>
-            <a href={order} target="_blank" rel="noopener" className="btn btn-wa shrink-0 whitespace-nowrap !border-cream !shadow-[5px_5px_0_0_#0b1430]">
-              <MessageCircle className="size-5" aria-hidden="true" />
-              Naruči crtani
-            </a>
+            <PackageButton
+              id="deda-mraz"
+              label="Naruči crtani"
+              className="btn btn-primary shrink-0 whitespace-nowrap !border-cream !shadow-[5px_5px_0_0_#0b1430]"
+            />
           </div>
+          <a href={order} target="_blank" rel="noopener" className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-cream/80 underline decoration-2 underline-offset-4 hover:text-sun">
+            <MessageCircle className="size-4" aria-hidden="true" />
+            ili pišite na WhatsApp
+          </a>
           <p className="mt-4 flex items-center gap-2 text-sm font-semibold text-cream/70">
             <Gift className="size-4 shrink-0 text-sun" aria-hidden="true" />
             Lijep poklon i od kumova, baba i đedova.

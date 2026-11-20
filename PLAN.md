@@ -102,3 +102,25 @@ Ideas from the research, not built yet:
 - Gift voucher for grandparents.
 - New Year timing: it is late November, the main gift season. A "Deda Mraz" / New Year film theme and a December push are worth doing now.
 - Diaspora pages later at about 99 € / 199 € / 349 € (DE net wage ~2,780 €).
+
+## Order form (main contact, since 2026-11-20)
+
+The order wizard ends in a contact form that posts to `/api/narudzba`
+(`functions/api/narudzba.ts`, a Cloudflare Pages Function). It emails the order
+through Resend, the same provider as vaky.me. WhatsApp is the second choice
+everywhere.
+
+Before launch, in Cloudflare → Pages → vakykids → Settings → Variables and secrets:
+
+- `RESEND_API_KEY` (secret, required). Without it every order answers "server" and
+  the visitor is offered WhatsApp/email instead.
+- `ORDER_NOTIFY_TO` (optional): where orders go. Default: vakymne@gmail.com.
+- `ORDER_NOTIFY_FROM` (optional): default `Vaky Kids <onboarding@vaky.me>`. vaky.me is
+  already verified in Resend. To send from `@vakykids.me`, verify that domain first.
+
+Also add a rate limiting rule (Security → WAF → Rate limiting rules): path equals
+`/api/narudzba`, method POST, about 5 requests per minute per IP, then block for 10 minutes.
+
+Test locally with Functions: `npm run build`, then
+`npx wrangler pages dev out` (a plain `npm run dev` has no `/api`, so the form shows
+its "send by WhatsApp/email" fallback there).

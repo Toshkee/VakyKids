@@ -1,4 +1,5 @@
 import { isHolidayActive } from "@/config/site";
+import { BottomBar } from "@/components/BottomBar";
 import { DedaMraz } from "@/components/DedaMraz";
 import { Faq } from "@/components/Faq";
 import { FilmAnatomy } from "@/components/FilmAnatomy";
@@ -6,35 +7,35 @@ import { Founder } from "@/components/Founder";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
-import { HowItWorks } from "@/components/HowItWorks";
-import { NamePreview } from "@/components/NamePreview";
+import { HowStories } from "@/components/HowStories";
+import { OrderWizard } from "@/components/OrderWizard";
 import { Packages } from "@/components/Packages";
 import { ParallaxController } from "@/components/ParallaxController";
 import { StickyWhatsApp } from "@/components/StickyWhatsApp";
-import { StoryBuilder } from "@/components/StoryBuilder";
 import { ToyWorld } from "@/components/toys/ToyWorld";
-import { WhyUs } from "@/components/WhyUs";
+import { HeroProvider } from "@/lib/hero";
 
+/* Name first: the hero asks for the child's name, and every section after it
+   (holiday offer, tickets, order wizard) uses the same name. */
 export default function Home() {
   return (
-    <>
+    <HeroProvider>
       <Header />
       <main>
         <Hero />
         {isHolidayActive() && <DedaMraz />}
-        <NamePreview />
         <FilmAnatomy />
-        <HowItWorks />
-        <Founder />
+        <HowStories />
         <Packages />
-        <StoryBuilder />
-        <WhyUs />
+        <OrderWizard />
+        <Founder />
         <Faq />
       </main>
       <Footer />
       <StickyWhatsApp />
+      <BottomBar />
       <ParallaxController />
       <ToyWorld />
-    </>
+    </HeroProvider>
   );
 }

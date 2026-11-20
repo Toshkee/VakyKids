@@ -1,57 +1,120 @@
-import { Play } from "lucide-react";
-import { site } from "@/config/site";
-import { Cloud, Dino, Star } from "./characters";
-import { ArrowCurl, Sparkle, Squiggle } from "./doodles";
+"use client";
+
+import { useId, useState, type FormEvent } from "react";
+import { ArrowDown, Play } from "lucide-react";
+import { adventureById, adventures } from "@/content/adventures";
+import { useHero } from "@/lib/hero";
+import { Cloud } from "./characters";
+import { Sparkle, Squiggle } from "./doodles";
 import { Floaty } from "./Floaty";
-import { LoopVideo } from "./LoopVideo";
+import { Spica } from "./Spica";
 
 const proof = ["Napravljeno u Podgorici", "Originalni likovi", "Gotovo za 5 dana"];
 
-/* Row of sprocket holes along a film edge. */
-function Sprockets() {
-  return (
-    <div className="flex justify-between px-3 py-1.5" aria-hidden="true">
-      {Array.from({ length: 14 }, (_, i) => (
-        <span key={i} className="h-2.5 w-4 rounded-[3px] bg-cream/80" />
-      ))}
-    </div>
-  );
-}
-
+/* Name first: the parent types the child's name, presses play, the curtains
+   open and the opening of "their" cartoon plays with that name. The same name
+   then follows them through the page. */
 export function Hero() {
+  const { raw, setRaw, name, shown, adventure, setAdventure } = useHero();
+  const [signal, setSignal] = useState(0);
+  const inputId = useId();
+  const adv = adventureById(adventure);
+  const play = () => setSignal((n) => n + 1);
+
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    (document.activeElement as HTMLElement | null)?.blur();
+    play();
+  };
+
   return (
-    <section aria-labelledby="hero-title" className="relative overflow-hidden pb-28 pt-6 md:pb-36 md:pt-14">
-      <Floaty speed={0.3} slow className="left-[42%] top-2 hidden w-32 opacity-90 lg:block">
+    <section aria-labelledby="hero-title" className="relative overflow-hidden pb-24 pt-4 md:pb-32 lg:pt-12">
+      <Floaty speed={0.3} slow className="left-[44%] top-2 hidden w-32 opacity-90 lg:block">
         <Cloud />
       </Floaty>
 
-      <div className="relative mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] items-center gap-14 px-4 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] md:gap-10">
-        <div>
-          <p className="eyebrow mb-4 flex items-center gap-2">
+      <div className="relative mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-x-12 gap-y-7 px-4 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)] lg:grid-rows-[auto_1fr]">
+        {/* Title and the name field. On phones this all fits on the first screen. */}
+        <div className="lg:col-start-1 lg:row-start-1">
+          <p className="eyebrow mb-3 flex items-center gap-2">
             <Sparkle className="size-5 text-sun" />
             personalizovani crtani filmovi
           </p>
-          <h1 id="hero-title" className="text-[2.75rem] font-extrabold leading-[1.02] tracking-[-0.01em] sm:text-6xl lg:text-[4.25rem]">
+          <h1 id="hero-title" className="text-[2.6rem] font-extrabold leading-[1.02] tracking-[-0.01em] sm:text-6xl lg:text-[4rem]">
             Vaše dijete — glavni junak{" "}
             <span className="relative whitespace-nowrap text-coral-deep">
               crtanog filma
               <Squiggle className="absolute -bottom-2 left-0 h-3 w-full text-sun" />
             </span>
           </h1>
-          <p className="mt-7 max-w-lg text-lg leading-relaxed text-grape-soft sm:text-xl">
-            Crtani u kojem vaše dijete spašava, leti i istražuje. Sa svojim imenom, omiljenim stvarima i
-            naracijom na našem jeziku.
+
+          <form onSubmit={onSubmit} className="mt-7">
+            <label htmlFor={inputId} className="block font-display text-xl font-bold sm:text-2xl">
+              Kako se zove vaš mali junak?
+            </label>
+            <div className="mt-3 flex items-stretch gap-2 rounded-[1.4rem] border-[3px] border-grape bg-white p-1.5 shadow-sticker focus-within:shadow-[5px_5px_0_0_var(--color-coral-deep)]">
+              <input
+                id={inputId}
+                type="text"
+                value={raw}
+                onChange={(e) => setRaw(e.target.value)}
+                maxLength={14}
+                autoComplete="off"
+                autoCapitalize="words"
+                enterKeyHint="go"
+                placeholder="npr. Luka"
+                className="min-w-0 flex-1 bg-transparent px-3 font-display text-2xl font-bold outline-none placeholder:text-grape/35"
+              />
+              <button type="submit" className="btn btn-primary btn-sm shrink-0 !rounded-2xl !px-4 !py-3 !text-base sm:!px-5">
+                <Play className="size-4 fill-white" aria-hidden="true" />
+                Pusti
+              </button>
+            </div>
+            <p className="mt-2.5 text-sm font-semibold text-grape-soft">
+              Ime ostaje samo na vašem telefonu dok ne pošaljete narudžbu.
+            </p>
+          </form>
+        </div>
+
+        {/* The screen. */}
+        <div className="mx-auto w-full max-w-2xl lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:max-w-none lg:self-center">
+          <Spica theme={adv} name={shown} autoplay={false} playSignal={signal} curtains />
+          <div className="mt-4 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]" role="group" aria-label="Avantura">
+            {adventures.map((a) => (
+              <button
+                key={a.id}
+                type="button"
+                aria-pressed={adventure === a.id}
+                onClick={() => {
+                  setAdventure(a.id);
+                  play();
+                }}
+                className="shrink-0 rounded-full border-[3px] border-grape bg-white px-4 py-1.5 font-semibold transition-transform duration-200 hover:-translate-y-0.5 aria-pressed:bg-sun"
+              >
+                {a.chip}
+              </button>
+            ))}
+          </div>
+          <p className="mt-3 text-sm font-semibold text-grape-soft" aria-live="polite">
+            {name ? `Ovako počinje crtani u kojem je ${name} glavni junak.` : "Upišite ime, pritisnite Pusti i gledajte."}
           </p>
-          <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
-            <a href="#naruci" className="btn btn-primary sticker w-full animate-wiggle sm:w-auto">
+        </div>
+
+        <div className="lg:col-start-1 lg:row-start-2">
+          <p className="max-w-lg text-lg leading-relaxed text-grape-soft">
+            Crtani u kojem vaše dijete spašava, leti i istražuje. Sa svojim imenom, omiljenim stvarima i naracijom na
+            našem jeziku.
+          </p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <a href="#naruci" className="btn btn-primary sticker w-full sm:w-auto">
               Naruči crtani
             </a>
             <a href="#primjer" className="btn btn-secondary sticker w-full sm:w-auto">
-              <Play className="size-5" aria-hidden="true" />
-              Pogledaj primjer
+              <ArrowDown className="size-5" aria-hidden="true" />
+              Pogledaj pravi crtani
             </a>
           </div>
-          <ul className="mt-9 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.95rem] font-bold text-grape-soft">
+          <ul className="mt-7 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.95rem] font-bold text-grape-soft">
             {proof.map((p, i) => (
               <li key={p} className="flex items-center gap-3">
                 {i > 0 && <Sparkle className="size-3 text-coral" />}
@@ -59,52 +122,6 @@ export function Hero() {
               </li>
             ))}
           </ul>
-        </div>
-
-        <div id="primjer" className="relative scroll-mt-10">
-          <p className="hand absolute -top-11 left-2 z-10 rotate-[-4deg] text-2xl text-grape md:-left-6 md:-top-12 md:text-[1.7rem]">
-            isječak iz pravog crtanog
-          </p>
-          <ArrowCurl className="absolute -top-6 right-[12%] z-10 hidden w-16 rotate-[8deg] text-grape md:block" />
-
-          {/* The "screen": a strip of film with the teaser inside. */}
-          <div className="sticker rotate-[1.2deg] overflow-hidden rounded-[1.75rem] border-[3px] border-grape bg-ink shadow-sticker-lg">
-            <Sprockets />
-            <div className="relative mx-3 aspect-video overflow-hidden rounded-xl">
-              {site.teaser ? (
-                <LoopVideo
-                  eager
-                  src={site.teaser.mp4}
-                  poster={site.teaser.poster}
-                  label="Isječak iz crtanog: dječak jaše dinosaurusa, grli malog triceratopsa i slavi drugi rođendan"
-                />
-              ) : (
-                <div className="relative h-full w-full bg-sky">
-                  <Cloud className="absolute left-[8%] top-[10%] w-24 opacity-90" />
-                  <Cloud className="absolute right-[6%] top-[22%] w-16 opacity-80" />
-                  <Star className="absolute right-[24%] top-[8%] w-8" />
-                  <div className="absolute inset-x-0 bottom-0 h-[30%] rounded-t-[50%_30%] bg-mint" />
-                  <Dino className="absolute bottom-[10%] left-1/2 w-[40%] -translate-x-1/2 animate-bob" />
-                  <span className="absolute left-1/2 top-[36%] flex size-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-[3px] border-grape bg-white shadow-sticker">
-                    <Play className="ml-1 size-7 fill-grape" aria-hidden="true" />
-                  </span>
-                </div>
-              )}
-            </div>
-            <Sprockets />
-            <div className="flex items-center justify-between gap-3 border-t-2 border-dashed border-cream/25 px-5 py-3 text-cream">
-              <p className="min-w-0 truncate font-display text-base font-semibold leading-tight sm:text-lg">
-                {site.filmTitle} <span className="font-sans text-sm font-semibold text-cream/70">· 3:10</span>
-              </p>
-              <p className="whitespace-nowrap rounded-full bg-sun px-3 py-0.5 text-xs font-extrabold text-ink sm:text-sm">
-                {site.teaser ? "Pravi crtani" : "Isječak stiže uskoro"}
-              </p>
-            </div>
-          </div>
-
-          <Floaty speed={0.8} className="-bottom-10 -left-5 w-14 md:-left-10 md:w-[4.5rem]">
-            <Star />
-          </Floaty>
         </div>
       </div>
     </section>

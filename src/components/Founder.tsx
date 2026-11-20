@@ -1,3 +1,4 @@
+import { safety } from "@/content/home";
 import { LoopVideo } from "./LoopVideo";
 import { Wave } from "./Wave";
 
@@ -40,6 +41,21 @@ export function Founder() {
           </div>
           <p className="hand mt-6 text-4xl text-grape">Pavle</p>
           <p className="text-sm font-bold text-grape-soft">Vaky Kids · Podgorica</p>
+        </div>
+      </div>
+
+      {/* The promise to parents, written like a signed note. */}
+      <div className="mx-auto mt-14 max-w-5xl px-4">
+        <div className="rounded-[2rem] border-[3px] border-grape bg-white px-6 py-7 shadow-sticker md:px-10">
+          <p className="hand text-3xl text-wa md:text-4xl">Naše obećanje roditeljima</p>
+          <ol className="mt-5 grid gap-x-10 gap-y-4 sm:grid-cols-2">
+            {safety.map((s, i) => (
+              <li key={s} className="flex gap-3 text-lg">
+                <span className="font-display text-2xl font-extrabold leading-none text-wa">{i + 1}.</span>
+                {s}
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>

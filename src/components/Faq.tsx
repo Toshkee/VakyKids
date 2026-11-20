@@ -14,7 +14,7 @@ export function Faq() {
             Česta pitanja
           </h2>
           <p className="mt-4 text-lg text-grape-soft">Niste našli odgovor? Pišite nam, rado ćemo pomoći.</p>
-          <a href={waLink()} target="_blank" rel="noopener" className="btn btn-wa sticker btn-sm mt-6">
+          <a href={waLink()} target="_blank" rel="noopener" className="btn btn-secondary btn-sm mt-6">
             <MessageCircle className="size-5" aria-hidden="true" />
             Pitajte na WhatsApp-u
           </a>

@@ -1,6 +1,7 @@
 import { Check, Clock, Film } from "lucide-react";
 import { addons, formatPrice, isLaunchActive, launchOffer, packages, spotsLabel } from "@/config/site";
 import { PackageButton } from "./PackageButton";
+import { TicketStub } from "./TicketStub";
 import { Wave } from "./Wave";
 
 /* Packages drawn as cinema tickets: a main part, a perforated tear line with
@@ -35,11 +36,13 @@ export function Packages() {
           </div>
         )}
 
-        <ul className="mt-14 grid gap-10 md:grid-cols-3 md:items-start md:gap-6 lg:gap-8">
+        {/* Phones: a row of tickets to swipe through, the next one peeking in. */}
+        <p className="hand mt-8 text-center text-2xl text-grape/70 md:hidden">povucite ulaznice u stranu →</p>
+        <ul className="-mx-4 mt-2 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-6 pt-12 [scrollbar-width:none] md:mx-0 md:mt-14 md:grid md:grid-cols-3 md:items-start md:gap-6 md:overflow-visible md:p-0 lg:gap-8">
           {packages.map((p) => {
             const showLaunch = launch && p.launchPrice !== undefined;
             return (
-              <li key={p.id} className={`relative ${p.popular ? "md:-mt-4" : ""}`}>
+              <li key={p.id} className={`relative w-[84%] shrink-0 snap-center md:w-auto ${p.popular ? "md:-mt-4" : ""}`}>
                 {p.popular && (
                   <span className="absolute -right-1 -top-9 z-10 flex size-20 rotate-12 sm:-right-3 items-center justify-center rounded-full border-[3px] border-grape bg-coral-deep text-center font-display text-[13px] font-semibold leading-tight text-white shadow-sticker">
                     Najpopu&shy;larniji
@@ -75,7 +78,7 @@ export function Packages() {
                     <span className="absolute -right-[18px] -top-[16px] size-8 rounded-full border-[3px] border-grape bg-sun-soft [clip-path:inset(0_50%_0_0)]" />
                   </div>
 
-                  <p className="hand px-6 pt-4 text-xl text-grape/60">važi za jednog junaka</p>
+                  <TicketStub />
                   <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3 px-6 pb-6 pt-1">
                     <div>
                       {showLaunch ? (

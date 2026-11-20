@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { RotateCcw } from "lucide-react";
+import { Play, RotateCcw } from "lucide-react";
 
 /* A live version of the opening titles from our films: a few painted shots,
    moved by code, then the hero object bursts and the child's name lands.
@@ -44,7 +44,26 @@ const NAME_SHADOW = `${ring(0.075, "#fff")}, 0 0.12em 0 rgba(35,26,69,0.35), 0 0
 
 const reduceMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-export function Spica({ theme, name }: { theme: SpicaTheme; name: string }) {
+/* Red velvet with folds, for the curtains in front of the screen. */
+const VELVET =
+  "linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(40,0,10,0.35)), repeating-linear-gradient(90deg, #7d0d1f 0%, #b81e35 4%, #d9364c 6%, #b81e35 8%, #7d0d1f 12%)";
+
+export function Spica({
+  theme,
+  name,
+  autoplay = true,
+  playSignal = 0,
+  curtains = false,
+}: {
+  theme: SpicaTheme;
+  name: string;
+  /* Play by itself once on screen. Otherwise wait for playSignal or the play button. */
+  autoplay?: boolean;
+  /* Bump to play (again) from the outside, e.g. when the name is submitted. */
+  playSignal?: number;
+  /* Closed theatre curtains that open when the opening starts. */
+  curtains?: boolean;
+}) {
   const root = useRef<HTMLDivElement>(null);
   const tl = useRef<gsap.core.Timeline | null>(null);
   const [near, setNear] = useState(false);
@@ -72,10 +91,18 @@ export function Spica({ theme, name }: { theme: SpicaTheme; name: string }) {
 
   // A new adventure plays from the start, as soon as it is visible.
   useEffect(() => {
-    if (!near || !inView || played.current === theme.id) return;
+    if (!autoplay || !near || !inView || played.current === theme.id) return;
     played.current = theme.id;
     setRun((n) => n + 1);
-  }, [near, inView, theme.id]);
+  }, [autoplay, near, inView, theme.id]);
+
+  // Played from the outside: react to a new playSignal during render.
+  const [seenSignal, setSeenSignal] = useState(playSignal);
+  if (playSignal !== seenSignal) {
+    setSeenSignal(playSignal);
+    setNear(true);
+    setRun((n) => n + 1);
+  }
 
   useLayoutEffect(() => {
     const el = root.current;
@@ -98,6 +125,8 @@ export function Spica({ theme, name }: { theme: SpicaTheme; name: string }) {
         gsap.set(heroShot, { autoAlpha: 1 });
         gsap.set([black, q("[data-flash]"), q("[data-presents]")], { autoAlpha: 0 });
         gsap.set([title, sub], { autoAlpha: 1 });
+        gsap.set(q("[data-curtain='l']"), { xPercent: -102 });
+        gsap.set(q("[data-curtain='r']"), { xPercent: 102 });
         setDone(true);
         return;
       }
@@ -114,6 +143,10 @@ export function Spica({ theme, name }: { theme: SpicaTheme; name: string }) {
       const t = gsap.timeline({ paused: true, onComplete: () => setDone(true) });
       gsap.set(q("[data-fx] *"), { scale: 1, scaleY: 1, opacity: 1 });
       tl.current = t;
+
+      // 0. The curtains part.
+      t.fromTo(q("[data-curtain='l']"), { xPercent: 0 }, { xPercent: -102, duration: 1.3, ease: "power2.inOut" }, 0)
+        .fromTo(q("[data-curtain='r']"), { xPercent: 0 }, { xPercent: 102, duration: 1.3, ease: "power2.inOut" }, 0);
 
       // 1. Night sky, "Vaky Kids predstavlja", a shooting star.
       t.to(black, { autoAlpha: 0, duration: 0.9, ease: "power1.out" }, 0)
@@ -309,8 +342,39 @@ export function Spica({ theme, name }: { theme: SpicaTheme; name: string }) {
       </div>
 
       <div data-black aria-hidden="true" className="absolute inset-0 grid place-items-center bg-[#0b0820]">
-        {!started && <span className="animate-pulse text-sm font-semibold text-white/60">Učitavam špicu…</span>}
+        {!started && run > 0 && <span className="animate-pulse text-sm font-semibold text-white/60">Učitavam špicu…</span>}
       </div>
+
+      {curtains && (
+        <>
+          <div data-curtain="l" aria-hidden="true" className="absolute inset-y-0 left-0 w-[51%] rounded-r-[40%_8%]" style={{ background: VELVET }} />
+          <div data-curtain="r" aria-hidden="true" className="absolute inset-y-0 right-0 w-[51%] rounded-l-[40%_8%]" style={{ background: VELVET }} />
+          {/* The pelmet stays, like in a real cinema. */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-x-0 top-0 h-[7%]"
+            style={{
+              background:
+                "radial-gradient(circle at 50% 0, #9a1328 70%, transparent 71%) 0 100% / 8% 140% repeat-x, linear-gradient(#7d0d1f, #9a1328)",
+            }}
+          />
+          {run === 0 && (
+            <button
+              type="button"
+              onClick={() => {
+                setNear(true);
+                setRun((n) => n + 1);
+              }}
+              className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-2 font-display text-lg font-bold text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.5)]"
+            >
+              <span className="flex size-16 items-center justify-center rounded-full border-[3px] border-grape bg-sun shadow-sticker transition-transform duration-300 hover:scale-110 sm:size-20">
+                <Play className="ml-1 size-7 fill-grape text-grape sm:size-9" aria-hidden="true" />
+              </span>
+              Pusti špicu
+            </button>
+          )}
+        </>
+      )}
 
       <button
         type="button"

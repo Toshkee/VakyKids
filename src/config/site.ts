@@ -80,7 +80,7 @@ export const packages: Package[] = [
   {
     id: "3",
     name: "Pravi crtani",
-    length: "3 minuta",
+    length: "3 minute",
     scenes: "oko 20 scena",
     delivery: "gotov za 7 dana",
     features: [

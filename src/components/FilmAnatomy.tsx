@@ -54,7 +54,7 @@ function Perforation() {
 
 export function FilmAnatomy() {
   return (
-    <section aria-labelledby="film-title" className="relative overflow-hidden bg-grape pb-24 pt-16 text-cream md:pb-32">
+    <section id="primjer" aria-labelledby="film-title" className="relative scroll-mt-4 overflow-hidden bg-grape pb-24 pt-16 text-cream md:pb-32">
       <Wave fill="var(--color-grape)" />
       <div className="mx-auto max-w-6xl px-4">
         <div className="grid grid-cols-[minmax(0,1fr)] gap-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] md:items-end">

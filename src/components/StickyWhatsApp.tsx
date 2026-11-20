@@ -34,7 +34,7 @@ export function StickyWhatsApp() {
       aria-label="Pišite nam na WhatsApp"
       aria-hidden={hidden}
       tabIndex={hidden ? -1 : undefined}
-      className={`btn btn-wa fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-40 !size-14 !p-0 !shadow-[3px_3px_0_0_var(--color-grape)] transition-[opacity,transform] duration-300 sm:right-5 sm:!size-16 ${
+      className={`btn btn-wa max-md:!hidden fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 z-40 !size-14 !p-0 !shadow-[3px_3px_0_0_var(--color-grape)] transition-[opacity,transform] duration-300 sm:right-5 sm:!size-16 ${
         hidden ? "pointer-events-none translate-y-4 opacity-0" : "opacity-100"
       }`}
     >

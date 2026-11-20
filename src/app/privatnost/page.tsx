@@ -22,7 +22,7 @@ const sections = [
     h: "Koje podatke koristimo",
     p: [
       "Ime i uzrast djeteta, ono što dijete voli, fotografije koje nam pošaljete da bismo napravili lik, i snimak glasa ako želite da priču ispriča neko iz porodice.",
-      "Podatke nam šaljete preko WhatsApp-a ili Instagram poruke. Ovaj sajt ne prikuplja podatke iz formulara: poruku samo pripremi, a vi je šaljete.",
+      "Narudžbu nam šaljete preko forme na sajtu: ime djeteta, uzrast, šta voli, vaše ime i telefon ili email. Forma nam stiže emailom (preko servisa Resend) i ne čuvamo je u bazi. Fotografije i snimak glasa šaljete tek kada vam se javimo. Možete nam pisati i preko WhatsApp-a ili Instagrama.",
     ],
   },
   {

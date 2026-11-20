@@ -1,21 +1,6 @@
 /* Montenegrin (ijekavica) copy for the home page lists. Headings and short
    lines stay next to their markup in the components. */
 
-export const steps = [
-  {
-    title: "Ispričajte nam o djetetu",
-    text: "Ime, uzrast, šta voli i par fotografija. Sve stane u jednu WhatsApp poruku.",
-  },
-  {
-    title: "Mi pravimo crtani",
-    text: "Pišemo priču i režiramo scene, a likove, animaciju i muziku pravimo uz pomoć AI alata. Vi samo čekate.",
-  },
-  {
-    title: "Crtani stiže na vaš telefon",
-    text: "Dobijate crtani u HD kvalitetu, spreman za televizor, projektor u igraonici ili telefon.",
-  },
-];
-
 export type ThemeId =
   | "dino"
   | "svemir"
@@ -51,7 +36,7 @@ export const faq = [
   },
   {
     q: "Šta vam treba od mene?",
-    a: "Ime i uzrast djeteta, šta voli (dinosaurusi, svemir, omiljena igračka…), nekoliko fotografija da bismo lik napravili sličnim i datum kada vam crtani treba. Sve to šaljete u WhatsApp poruci.",
+    a: "Ime i uzrast djeteta, šta voli (dinosaurusi, svemir, omiljena igračka…), nekoliko fotografija da bismo lik napravili sličnim i datum kada vam crtani treba. Ime, uzrast i šta voli upišete u formu na sajtu, a fotografije pošaljete kad vam se javimo.",
   },
   {
     q: "Može li priču ispričati baka ili đed?",
@@ -79,6 +64,6 @@ export const faq = [
   },
   {
     q: "Kako se plaća?",
-    a: "Način plaćanja dogovaramo u WhatsApp poruci kada potvrdimo narudžbu.",
+    a: "Način plaćanja dogovaramo kada vam se javimo i potvrdimo narudžbu. Ništa ne plaćate unaprijed na sajtu.",
   },
 ];

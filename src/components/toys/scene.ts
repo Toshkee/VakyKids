@@ -41,17 +41,15 @@ const C = {
 };
 
 const PLACEMENTS: Placement[] = [
-  { anchor: "section[aria-labelledby='hero-title']", at: 0.78, side: "left", kind: "star", size: 64, depth: 1.25 },
+  { anchor: "section[aria-labelledby='hero-title']", at: 0.82, side: "left", kind: "star", size: 64, depth: 1.25 },
   { anchor: "#deda-mraz", at: 0.82, side: "right", kind: "teddy", size: 92, depth: 0.85 },
-  { anchor: "section[aria-labelledby='ime-title']", at: 0.14, side: "left", kind: "blocks", size: 88, depth: 0.8, phone: true },
-  { anchor: "section[aria-labelledby='film-title']", at: 0.12, side: "right", kind: "rocket", size: 100, depth: 1.3, phone: true },
-  { anchor: "#kako", at: 0.55, side: "right", kind: "ball", size: 72, depth: 1.15, phone: true },
-  { anchor: "section[aria-labelledby='prica-title']", at: 0.18, side: "right", kind: "rings", size: 92, depth: 0.85 },
-  { anchor: "#paketi", at: 0.08, side: "left", kind: "balloon", size: 96, depth: 0.75, color: C.coral, phone: true },
-  { anchor: "#paketi", at: 0.86, side: "right", kind: "star", size: 58, depth: 1.2 },
-  { anchor: "#naruci", at: 0.42, side: "right", kind: "teddy", size: 84, depth: 0.9, phone: true },
-  { anchor: "section[aria-labelledby='zasto-title']", at: 0.12, side: "left", kind: "balloon", size: 90, depth: 0.8, color: C.mint },
-  { anchor: "#pitanja", at: 0.3, side: "right", kind: "blocks", size: 76, depth: 1.1, phone: true },
+  { anchor: "#primjer", at: 0.12, side: "right", kind: "rocket", size: 100, depth: 1.3, phone: true },
+  { anchor: "#kako", at: 0.2, side: "left", kind: "blocks", size: 88, depth: 0.8, phone: true },
+  { anchor: "#paketi", at: 0.08, side: "right", kind: "balloon", size: 96, depth: 0.75, color: C.coral, phone: true },
+  { anchor: "#paketi", at: 0.86, side: "left", kind: "star", size: 58, depth: 1.2 },
+  { anchor: "#naruci", at: 0.4, side: "left", kind: "ball", size: 76, depth: 1.15, phone: true },
+  { anchor: "section[aria-labelledby='prica-title']", at: 0.18, side: "right", kind: "rings", size: 92, depth: 0.85, phone: true },
+  { anchor: "#pitanja", at: 0.3, side: "left", kind: "balloon", size: 90, depth: 0.8, color: C.mint, phone: true },
 ];
 
 /* ---------- materials ---------- */

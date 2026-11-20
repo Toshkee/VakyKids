@@ -14,10 +14,15 @@ export function Footer() {
         <p className="max-w-3xl font-display text-4xl font-extrabold leading-[1.05] sm:text-6xl">
           Svaki mali junak zaslužuje <span className="text-sun">svoj crtani.</span>
         </p>
-        <a href={waLink()} target="_blank" rel="noopener" className="btn btn-wa mt-8 !border-cream !shadow-[5px_5px_0_0_#231a45]">
-          <MessageCircle className="size-5" aria-hidden="true" />
-          Pišite nam na WhatsApp
-        </a>
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+          <Link href="/#naruci" className="btn btn-primary !border-cream !shadow-[5px_5px_0_0_#231a45]">
+            Naruči crtani
+          </Link>
+          <a href={waLink()} target="_blank" rel="noopener" className="flex items-center gap-2 font-bold text-cream/85 underline decoration-2 underline-offset-4 hover:text-sun">
+            <MessageCircle className="size-5" aria-hidden="true" />
+            ili pišite na WhatsApp
+          </a>
+        </div>
 
         <div className="mt-16 flex flex-col gap-10 border-t border-cream/20 pt-10 md:flex-row md:items-start md:justify-between">
           <div className="max-w-xs">

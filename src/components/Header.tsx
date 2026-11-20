@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { MessageCircle } from "lucide-react";
-import { isHolidayActive, waLink } from "@/config/site";
+import { Sparkles } from "lucide-react";
+import { isHolidayActive } from "@/config/site";
 import { Logo } from "./Logo";
 
 const links = [
@@ -18,17 +18,17 @@ export function Header() {
         <Link href="/" aria-label="Vaky Kids, početna">
           <Logo />
         </Link>
-        <nav aria-label="Glavna navigacija" className="hidden items-center gap-7 font-display text-lg font-medium md:flex">
+        <nav aria-label="Glavna navigacija" className="hidden items-center gap-7 font-display text-lg font-medium lg:flex">
           {links.map((l) => (
             <Link key={l.href} href={l.href} className="transition-colors hover:text-coral-deep">
               {l.label}
             </Link>
           ))}
         </nav>
-        <a href={waLink()} target="_blank" rel="noopener" className="btn btn-wa btn-sm sticker">
-          <MessageCircle className="size-5" aria-hidden="true" />
-          WhatsApp
-        </a>
+        <Link href="/#naruci" className="btn btn-primary btn-sm sticker">
+          <Sparkles className="size-4" aria-hidden="true" />
+          Naruči crtani
+        </Link>
       </div>
     </header>
   );
