@@ -26,7 +26,7 @@ export function Packages() {
           Izaberite svoju ulaznicu
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-center text-lg text-grape-soft">
-          Svaki film je napravljen samo za vaše dijete. Plaćate jednom, film je vaš zauvijek.
+          Svaki crtani je napravljen samo za vaše dijete. Plaćate jednom, crtani je vaš zauvijek.
         </p>
 
         {launch && (
@@ -38,7 +38,7 @@ export function Packages() {
               </span>
             </p>
             <p className="mt-1 text-grape-soft">
-              Zauzvrat tražimo kratku recenziju i dozvolu da film pokažemo kao primjer.
+              Zauzvrat tražimo kratku recenziju i dozvolu da crtani pokažemo kao primjer.
             </p>
           </div>
         )}

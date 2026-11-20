@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vaky Kids logo lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&family=Nunito:wght@700&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #f3efe6; font-family: Nunito, sans-serif; color: #231a45; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(var(--min,380px), 1fr)); gap: 16px; padding: 16px; }
+  figure { margin: 0; border-radius: 18px; overflow: hidden; border: 2px solid #231a4522; }
+  figure svg { display: block; width: 100%; height: auto; }
+  figcaption { background: #fff; padding: 8px 12px; font-weight: 700; font-size: 15px; }
+  .icons { display: flex; gap: 12px; padding: 0 16px 16px; flex-wrap: wrap; }
+  .icons svg { width: 96px; height: 96px; border-radius: 22px; }
+</style>
+</head>
+<body>
+<div class="grid" id="grid"></div>
+<div class="icons" id="icons"></div>
+<script>
+  // Logo B redrawn: a V with a face and two dino spikes, "aky", and a tilted "Kids" sticker.
+  const V_PATH = "M146 360 L264 614 L392 352";
+  function logo(p) {
+    return `
+<svg viewBox="60 230 920 600" xmlns="http://www.w3.org/2000/svg">
+  <rect x="60" y="230" width="920" height="600" fill="${p.bg}"/>
+  <path d="M214 372 C 206 330 214 292 236 282 C 258 274 296 304 322 340 Z" fill="${p.s1}"/>
+  <path d="M300 346 C 300 300 312 262 336 252 C 360 244 392 280 410 318 Z" fill="${p.s2}"/>
+  <path d="${V_PATH}" fill="none" stroke="${p.v}" stroke-width="100" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="246" cy="516" r="12" fill="${p.face}"/>
+  <path d="M276 548 Q 298 566 320 546" fill="none" stroke="${p.face}" stroke-width="10" stroke-linecap="round"/>
+  <text x="390" y="580" font-family="'Baloo 2'" font-weight="800" font-size="330" letter-spacing="-6" fill="${p.aky}">${p.multi ? p.multi.map((c, i) => `<tspan fill="${c}">${"aky"[i]}</tspan>`).join("") : "aky"}</text>
+  <g transform="rotate(-8 610 690)">
+    <rect x="430" y="610" width="360" height="160" rx="28" fill="${p.sticker}"/>
+    <text x="610" y="736" text-anchor="middle" font-family="'Baloo 2'" font-weight="800" font-size="140" fill="${p.kids}">Kids</text>
+  </g>
+</svg>`;
+  }
+  function icon(p) {
+    return `
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="112" fill="${p.iconBg ?? p.sticker}"/>
+  <g transform="translate(22 -142) scale(0.87)">
+    <path d="M214 372 C 206 330 214 292 236 282 C 258 274 296 304 322 340 Z" fill="${p.s1}"/>
+    <path d="M300 346 C 300 300 312 262 336 252 C 360 244 392 280 410 318 Z" fill="${p.s2}"/>
+    <path d="${V_PATH}" fill="none" stroke="${p.v}" stroke-width="100" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="246" cy="516" r="12" fill="${p.face}"/>
+    <path d="M276 548 Q 298 566 320 546" fill="none" stroke="${p.face}" stroke-width="10" stroke-linecap="round"/>
+  </g>
+</svg>`;
+  }
+  const palettes = [
+    { name: "1 · Original (grape + sun)", bg: "#fff8e1", v: "#3a2a6b", aky: "#3a2a6b", s1: "#7ed9a6", s2: "#ff8a7a", face: "#fff", sticker: "#ffd84d", kids: "#3a2a6b" },
+    { name: "2 · Coral", bg: "#fff8e1", v: "#d93a26", aky: "#d93a26", s1: "#ffd84d", s2: "#7ed9a6", face: "#fff", sticker: "#3a2a6b", kids: "#ffd84d" },
+    { name: "3 · Ocean blue", bg: "#fff8e1", v: "#1d5fae", aky: "#1d5fae", s1: "#ffd84d", s2: "#ff8a7a", face: "#fff", sticker: "#ff8a7a", kids: "#fff" },
+    { name: "4 · Dino green", bg: "#fff8e1", v: "#1e7a55", aky: "#1e7a55", s1: "#ffd84d", s2: "#ff8a7a", face: "#fff", sticker: "#7fd3f7", kids: "#1e3a5f" },
+    { name: "5 · Toy box (each letter a colour)", bg: "#fff8e1", v: "#3a2a6b", aky: "#3a2a6b", multi: ["#d93a26", "#1d5fae", "#1e7a55"], s1: "#7ed9a6", s2: "#ffd84d", face: "#fff", sticker: "#ff8a7a", kids: "#fff" },
+    { name: "6 · Vaky.me family (ink + red)", bg: "#fff8e1", v: "#231a45", aky: "#231a45", s1: "#ef4550", s2: "#ef4550", face: "#fff", sticker: "#ef4550", kids: "#fff" },
+    { name: "7 · Pink & purple", bg: "#fff8e1", v: "#7b2d8e", aky: "#7b2d8e", s1: "#ffb3c1", s2: "#ffd84d", face: "#fff", sticker: "#ff6fa0", kids: "#fff" },
+    { name: "8 · On dark (for videos / Instagram)", bg: "#3a2a6b", v: "#fff8e1", aky: "#fff8e1", s1: "#7ed9a6", s2: "#ff8a7a", face: "#3a2a6b", sticker: "#ffd84d", kids: "#3a2a6b", iconBg: "#3a2a6b" },
+  ];
+  document.getElementById("grid").innerHTML = palettes.map((p) => `<figure>${logo(p)}<figcaption>${p.name}</figcaption></figure>`).join("");
+  document.getElementById("icons").innerHTML = palettes.map(icon).join("");
+</script>
+</body>
+</html>

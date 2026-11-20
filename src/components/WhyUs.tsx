@@ -11,7 +11,7 @@ type Mark = "yes" | "no" | "some";
 const columns = [
   { full: "Personalizovana slikovnica", short: "Slikovnica" },
   { full: "Video čestitka", short: "Čestitka" },
-  { full: "Vaky Kids film", short: "Vaky Kids" },
+  { full: "Vaky Kids crtani", short: "Vaky Kids" },
 ];
 const rows: { label: string; marks: [Mark, Mark, Mark] }[] = [
   { label: "Dijete je junak cijele priče", marks: ["yes", "no", "yes"] },
@@ -55,7 +55,7 @@ export function WhyUs() {
       <div className="relative mx-auto max-w-5xl px-4">
         <p className="eyebrow">poklon koji se ne zaboravi</p>
         <h2 id="zasto-title" className="mt-2 max-w-2xl text-4xl font-extrabold leading-[1.05] sm:text-5xl">
-          Zašto film, a ne još jedna slikovnica?
+          Zašto crtani, a ne još jedna slikovnica?
         </h2>
 
         <div className="mt-10">

@@ -12,7 +12,7 @@ export function Footer() {
       <Wave fill="var(--color-grape)" />
       <div className="mx-auto max-w-6xl px-4">
         <p className="max-w-3xl font-display text-4xl font-extrabold leading-[1.05] sm:text-6xl">
-          Svaki mali junak zaslužuje <span className="text-sun">svoj film.</span>
+          Svaki mali junak zaslužuje <span className="text-sun">svoj crtani.</span>
         </p>
         <a href={waLink()} target="_blank" rel="noopener" className="btn btn-wa mt-8 !border-cream !shadow-[5px_5px_0_0_#231a45]">
           <MessageCircle className="size-5" aria-hidden="true" />
@@ -21,7 +21,7 @@ export function Footer() {
 
         <div className="mt-16 flex flex-col gap-10 border-t border-cream/20 pt-10 md:flex-row md:items-start md:justify-between">
           <div className="max-w-xs">
-            <Logo onDark />
+            <Logo onDark size="lg" />
             <p className="mt-3 text-cream/80">Personalizovani crtani filmovi za djecu, iz Podgorice.</p>
           </div>
           <nav aria-label="Linkovi u podnožju" className="grid grid-cols-2 gap-x-14 gap-y-3 text-lg font-bold">

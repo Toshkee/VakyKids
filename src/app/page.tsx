@@ -1,3 +1,5 @@
+import { isHolidayActive } from "@/config/site";
+import { DedaMraz } from "@/components/DedaMraz";
 import { Faq } from "@/components/Faq";
 import { FilmAnatomy } from "@/components/FilmAnatomy";
 import { Founder } from "@/components/Founder";
@@ -18,6 +20,7 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
+        {isHolidayActive() && <DedaMraz />}
         <NamePreview />
         <FilmAnatomy />
         <HowItWorks />

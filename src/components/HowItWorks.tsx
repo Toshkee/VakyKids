@@ -74,7 +74,7 @@ export function HowItWorks() {
       <div className="mx-auto max-w-5xl px-4">
         <p className="eyebrow text-center">bez muke za roditelje</p>
         <h2 id="kako-title" className="mt-2 text-center text-4xl font-extrabold leading-[1.05] sm:text-5xl">
-          Kako nastaje vaš film
+          Kako nastaje vaš crtani
         </h2>
 
         <div data-track-wrap className="relative mt-14">

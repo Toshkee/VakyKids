@@ -8,9 +8,9 @@ const frames = [
   {
     time: "00:32",
     title: "Naslov sa imenom",
-    text: "Ime vašeg djeteta u naslovu filma, uz muziku i konfete.",
+    text: "Ime vašeg djeteta u naslovu crtanog, uz muziku i konfete.",
     clip: "strip-title",
-    label: "Naslov filma: Vlaki i spašavanje dinosaurusa",
+    label: "Naslov crtanog: Vlaki i spašavanje dinosaurusa",
   },
   {
     time: "00:45",
@@ -29,21 +29,22 @@ const frames = [
   {
     time: "02:58",
     title: "Odjavna špica",
-    text: "Glavna uloga, rođendanska čestitka i potpis, kao u pravom filmu.",
+    text: "Glavna uloga, rođendanska čestitka i potpis, kao u pravom crtanom.",
     clip: "strip-credits",
     label: "Odjavna špica: Glavna uloga Vlaki, Srećan 2. rođendan",
   },
 ];
 
 const stats = [
-  { value: "3:10", label: "trajanje filma" },
+  { value: "3:10", label: "trajanje crtanog" },
   { value: "16", label: "animiranih scena" },
   { value: "1", label: "glavni junak" },
 ];
 
 function Perforation() {
   return (
-    <div className="flex gap-4 overflow-hidden px-2 py-2" aria-hidden="true">
+    // contain: inline-size keeps the 60 holes from widening the strip; they just fill it.
+    <div className="flex gap-4 overflow-hidden px-2 py-2 [contain:inline-size]" aria-hidden="true">
       {Array.from({ length: 60 }, (_, i) => (
         <span key={i} className="h-3 w-5 shrink-0 rounded-[3px] bg-cream/85" />
       ))}
@@ -64,7 +65,7 @@ export function FilmAnatomy() {
             </h2>
           </div>
           <p className="text-lg text-cream/80 md:pb-1">
-            Ovo su pravi kadrovi iz jednog našeg filma. Ne niz slika sa muzikom, nego film koji teče kao pravi crtać: scene se
+            Ovo su pravi kadrovi iz jednog našeg crtanog. Ne niz slika sa muzikom, nego animacija koja teče kao u pravom crtanom filmu: scene se
             pretapaju, a junaci se kreću, smiju i pričaju.
           </p>
         </div>
@@ -87,7 +88,7 @@ export function FilmAnatomy() {
             </ol>
             <Perforation />
           </div>
-          <ol className="mt-6 flex gap-3 px-3 md:grid md:grid-cols-4" aria-label="Dijelovi filma">
+          <ol className="mt-6 flex gap-3 px-3 md:grid md:grid-cols-4" aria-label="Dijelovi crtanog">
             {frames.map((f) => (
               <li key={f.title} className="w-64 shrink-0 md:w-auto">
                 <p className="font-mono text-sm font-bold text-sun">{f.time}</p>

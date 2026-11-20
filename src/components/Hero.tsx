@@ -42,12 +42,12 @@ export function Hero() {
             </span>
           </h1>
           <p className="mt-7 max-w-lg text-lg leading-relaxed text-grape-soft sm:text-xl">
-            Animirani film u kojem vaše dijete spašava, leti i istražuje. Sa svojim imenom, omiljenim stvarima i
+            Crtani u kojem vaše dijete spašava, leti i istražuje. Sa svojim imenom, omiljenim stvarima i
             naracijom na našem jeziku.
           </p>
           <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
             <a href="#naruci" className="btn btn-primary sticker w-full animate-wiggle sm:w-auto">
-              Naruči film
+              Naruči crtani
             </a>
             <a href="#primjer" className="btn btn-secondary sticker w-full sm:w-auto">
               <Play className="size-5" aria-hidden="true" />
@@ -66,7 +66,7 @@ export function Hero() {
 
         <div id="primjer" className="relative scroll-mt-10">
           <p className="hand absolute -top-11 left-2 z-10 rotate-[-4deg] text-2xl text-grape md:-left-6 md:-top-12 md:text-[1.7rem]">
-            isječak iz pravog filma
+            isječak iz pravog crtanog
           </p>
           <ArrowCurl className="absolute -top-6 right-[12%] z-10 hidden w-16 rotate-[8deg] text-grape md:block" />
 
@@ -79,7 +79,7 @@ export function Hero() {
                   eager
                   src={site.teaser.mp4}
                   poster={site.teaser.poster}
-                  label="Isječak iz filma: dječak jaše dinosaurusa, grli malog triceratopsa i slavi drugi rođendan"
+                  label="Isječak iz crtanog: dječak jaše dinosaurusa, grli malog triceratopsa i slavi drugi rođendan"
                 />
               ) : (
                 <div className="relative h-full w-full bg-sky">
@@ -100,7 +100,7 @@ export function Hero() {
                 {site.filmTitle} <span className="font-sans text-sm font-semibold text-cream/70">· 3:10</span>
               </p>
               <p className="whitespace-nowrap rounded-full bg-sun px-3 py-0.5 text-xs font-extrabold text-ink sm:text-sm">
-                {site.teaser ? "Pravi film" : "Isječak stiže uskoro"}
+                {site.teaser ? "Pravi crtani" : "Isječak stiže uskoro"}
               </p>
             </div>
           </div>

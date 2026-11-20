@@ -1,39 +1,58 @@
-/* Wordmark: the baby triceratops' head peeking over "Vaky", with "Kids" as a
-   tilted sticker. Placeholder until a drawn logo exists. */
+/* Vaky Kids logo: the "V" is a baby dino (eye, smile, two back-spikes, a
+   nod to the two marks over the Vaky.me V), then "aky" and a tilted "Kids"
+   sticker. Same drawing as brand/vaky-kids-logo.svg. */
+
+const palettes = {
+  light: { letters: "#d93a26", face: "#fff", spikeA: "#ffd84d", spikeB: "#7ed9a6", sticker: "#3a2a6b", kids: "#ffd84d" },
+  dark: { letters: "#fff8e1", face: "#3a2a6b", spikeA: "#ffd84d", spikeB: "#7ed9a6", sticker: "#d93a26", kids: "#fff8e1" },
+};
+
 export function Logo({ size = "md", onDark = false }: { size?: "md" | "lg"; onDark?: boolean }) {
-  const big = size === "lg";
+  const p = onDark ? palettes.dark : palettes.light;
   return (
-    <span className="inline-flex items-end gap-1.5" aria-label="Vaky Kids">
-      <svg viewBox="58 8 60 60" className={big ? "size-14" : "size-10"} aria-hidden="true">
-        <ellipse cx="80" cy="36" rx="19" ry="21" fill="#FFB3C1" />
-        <circle cx="69" cy="25" r="3" fill="#FF8FA3" />
-        <circle cx="79" cy="19" r="3" fill="#FF8FA3" />
-        <circle cx="90" cy="23" r="3" fill="#FF8FA3" />
-        <circle cx="88" cy="48" r="18" fill="#7ED9A6" />
-        <path d="M83 33 L85 20 L90 32 Z" fill="#FFF3C4" />
-        <path d="M95 34 L99 22 L101 35 Z" fill="#FFF3C4" />
-        <path d="M102 47 L113 42 L105 53 Z" fill="#FFF3C4" />
-        <circle cx="93" cy="45" r="4.2" fill="#3A2A6B" />
-        <circle cx="94.4" cy="43.6" r="1.4" fill="#fff" />
-        <circle cx="98" cy="54" r="3.2" fill="#FF8FA3" opacity="0.7" />
-        <path d="M89 57 Q94 61 99 57" stroke="#3A2A6B" strokeWidth="2.2" fill="none" strokeLinecap="round" />
-      </svg>
-      <span
-        aria-hidden="true"
-        className={`font-display font-extrabold leading-none tracking-tight ${big ? "text-5xl" : "text-[1.7rem]"} ${
-          onDark ? "text-cream" : "text-grape"
-        }`}
+    <svg
+      viewBox="86 240 840 600"
+      role="img"
+      aria-label="Vaky Kids"
+      className={`block w-auto ${size === "lg" ? "h-20 md:h-24" : "h-14 md:h-[4.5rem]"}`}
+    >
+      <path d="M214 372 C 206 330 214 292 236 282 C 258 274 296 304 322 340 Z" fill={p.spikeA} />
+      <path d="M300 346 C 300 300 312 262 336 252 C 360 244 392 280 410 318 Z" fill={p.spikeB} />
+      <path
+        d="M146 360 L264 614 L392 352"
+        fill="none"
+        stroke={p.letters}
+        strokeWidth="100"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx="246" cy="516" r="12" fill={p.face} />
+      <path d="M276 548 Q 298 566 320 546" fill="none" stroke={p.face} strokeWidth="10" strokeLinecap="round" />
+      <text
+        x="390"
+        y="580"
+        fontWeight="800"
+        fontSize="330"
+        letterSpacing="-6"
+        fill={p.letters}
+        style={{ fontFamily: "var(--font-baloo)" }}
       >
-        Vaky
-      </span>
-      <span
-        aria-hidden="true"
-        className={`mb-0.5 inline-block -rotate-6 rounded-lg bg-coral-deep font-display font-bold leading-none text-white ${
-          big ? "px-2.5 py-1.5 text-2xl" : "px-1.5 py-1 text-base"
-        }`}
-      >
-        Kids
-      </span>
-    </span>
+        aky
+      </text>
+      <g transform="rotate(-8 610 690)">
+        <rect x="430" y="610" width="360" height="160" rx="28" fill={p.sticker} />
+        <text
+          x="610"
+          y="736"
+          textAnchor="middle"
+          fontWeight="800"
+          fontSize="140"
+          fill={p.kids}
+          style={{ fontFamily: "var(--font-baloo)" }}
+        >
+          Kids
+        </text>
+      </g>
+    </svg>
   );
 }

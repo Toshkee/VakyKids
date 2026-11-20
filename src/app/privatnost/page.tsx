@@ -34,13 +34,13 @@ const sections = [
   {
     h: "Alati koje koristimo",
     p: [
-      "Likove, animaciju, naraciju i muziku pravimo uz pomoć AI alata (Higgsfield i ElevenLabs) na plaćenim planovima. Fotografije i snimci glasa se obrađuju na njihovim serverima samo u svrhu izrade vašeg filma.",
+      "Likove, animaciju, naraciju i muziku pravimo uz pomoć AI alata (Higgsfield i ElevenLabs) na plaćenim planovima. Fotografije i snimci glasa se obrađuju na njihovim serverima samo u svrhu izrade vašeg crtanog.",
     ],
   },
   {
     h: "Koliko dugo čuvamo podatke",
     p: [
-      "Fotografije i snimke glasa brišemo čim isporučimo film i završimo izmjene. Gotov film ne objavljujemo bez vaše posebne dozvole.",
+      "Fotografije i snimke glasa brišemo čim isporučimo crtani i završimo izmjene. Gotov crtani ne objavljujemo bez vaše posebne dozvole.",
     ],
   },
   {

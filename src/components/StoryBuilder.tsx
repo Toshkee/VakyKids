@@ -69,7 +69,7 @@ export function StoryBuilder() {
       `Tema: ${t.label}`,
       `Paket: ${p.name} (${p.length})`,
     ];
-    if (date) lines.push(`Film nam treba do: ${formatDate(date)}`);
+    if (date) lines.push(`Crtani nam treba do: ${formatDate(date)}`);
     const extras = [voice && "priču čita neko iz porodice", express && "ekspresna izrada"].filter(Boolean);
     if (extras.length) lines.push(`Dodaci: ${extras.join(", ")}`);
     return lines.join("\n");
@@ -79,7 +79,7 @@ export function StoryBuilder() {
     e.preventDefault();
     const next: Errors = {};
     if (!name.trim()) next.name = "Upišite ime djeteta.";
-    if (!theme) next.theme = "Izaberite temu filma.";
+    if (!theme) next.theme = "Izaberite temu crtanog.";
     setErrors(next);
     if (Object.keys(next).length) return;
 
@@ -172,7 +172,7 @@ export function StoryBuilder() {
           </fieldset>
 
           <fieldset>
-            <legend className={labelCls}>Koji film?</legend>
+            <legend className={labelCls}>Koji crtani?</legend>
             <div className="mt-3 grid gap-3 sm:grid-cols-3">
               {packages.map((p) => {
                 const price = launch && p.launchPrice !== undefined ? p.launchPrice : p.price;
@@ -205,7 +205,7 @@ export function StoryBuilder() {
           <div className="grid gap-6 sm:grid-cols-2">
             <div>
               <label htmlFor={ids.date} className={labelCls}>
-                Do kada vam treba film? <span className="font-sans text-base font-normal">(nije obavezno)</span>
+                Do kada vam treba crtani? <span className="font-sans text-base font-normal">(nije obavezno)</span>
               </label>
               <input id={ids.date} type="date" value={date} onChange={(e) => setDate(e.target.value)} className={fieldCls} />
             </div>

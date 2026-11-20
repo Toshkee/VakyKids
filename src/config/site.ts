@@ -29,6 +29,21 @@ export const launchOffer = {
 
 export const isLaunchActive = () => launchOffer.spotsLeft > 0;
 
+/* Holiday offer: a short film in which Deda Mraz greets the child by name.
+   The section disappears on its own after endsOn (on the next deploy), or
+   set enabled to false. */
+export const holidayOffer = {
+  enabled: true,
+  name: "Novogodišnji crtani od Deda Mraza",
+  length: "30 do 60 sekundi",
+  price: 30,
+  delivery: "gotov za 2 do 3 dana",
+  orderBy: "26. decembra",
+  endsOn: "2027-01-08",
+};
+
+export const isHolidayActive = () => holidayOffer.enabled && Date.now() < Date.parse(holidayOffer.endsOn);
+
 export type PackageId = "1" | "3" | "5";
 
 export type Package = {
@@ -48,7 +63,7 @@ export type Package = {
 export const packages: Package[] = [
   {
     id: "1",
-    name: "Mini film",
+    name: "Mini crtani",
     length: "1 minut",
     scenes: "oko 8 scena",
     delivery: "gotov za 5 dana",
@@ -64,7 +79,7 @@ export const packages: Package[] = [
   },
   {
     id: "3",
-    name: "Pravi film",
+    name: "Pravi crtani",
     length: "3 minuta",
     scenes: "oko 20 scena",
     delivery: "gotov za 7 dana",
@@ -79,14 +94,14 @@ export const packages: Package[] = [
   },
   {
     id: "5",
-    name: "Veliki film",
+    name: "Veliki crtani",
     length: "5 minuta",
     scenes: "oko 35 scena",
     delivery: "rok po dogovoru",
     features: [
       "Velika avantura u više činova",
       "Više likova iz porodice",
-      "Sve iz paketa Pravi film",
+      "Sve iz paketa Pravi crtani",
     ],
     price: 279,
     fromPrice: true,

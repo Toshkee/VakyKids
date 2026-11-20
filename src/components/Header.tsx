@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
-import { waLink } from "@/config/site";
+import { isHolidayActive, waLink } from "@/config/site";
 import { Logo } from "./Logo";
 
 const links = [
+  ...(isHolidayActive() ? [{ href: "/#deda-mraz", label: "Deda Mraz" }] : []),
   { href: "/#primjer", label: "Primjer" },
   { href: "/#kako", label: "Kako funkcioniše" },
   { href: "/#paketi", label: "Paketi" },
