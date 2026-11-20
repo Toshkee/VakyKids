@@ -1,7 +1,5 @@
 import { Check, Clock, Film } from "lucide-react";
 import { addons, formatPrice, isLaunchActive, launchOffer, packages, spotsLabel } from "@/config/site";
-import { Balloon, Star } from "./characters";
-import { Floaty } from "./Floaty";
 import { PackageButton } from "./PackageButton";
 import { Wave } from "./Wave";
 
@@ -13,12 +11,6 @@ export function Packages() {
   return (
     <section id="paketi" aria-labelledby="paketi-title" className="relative bg-sun-soft pb-24 pt-16 md:pb-32">
       <Wave fill="var(--color-sun-soft)" />
-      <Floaty speed={0.9} className="right-[5%] top-10 hidden w-16 sm:block">
-        <Balloon />
-      </Floaty>
-      <Floaty speed={0.5} className="left-[4%] bottom-16 hidden w-14 md:block">
-        <Star />
-      </Floaty>
 
       <div className="relative mx-auto max-w-6xl px-4">
         <p className="eyebrow text-center">paketi i cijene</p>

@@ -1,7 +1,5 @@
 import { Check, Minus, X } from "lucide-react";
 import { safety } from "@/content/home";
-import { Rocket } from "./characters";
-import { Floaty } from "./Floaty";
 import { Wave } from "./Wave";
 
 type Mark = "yes" | "no" | "some";
@@ -48,9 +46,6 @@ export function WhyUs() {
   return (
     <section aria-labelledby="zasto-title" className="relative bg-cream pb-24 pt-16 md:pb-32">
       <Wave fill="var(--color-cream)" />
-      <Floaty speed={1.2} className="right-[5%] top-6 hidden w-14 lg:block">
-        <Rocket />
-      </Floaty>
 
       <div className="relative mx-auto max-w-5xl px-4">
         <p className="eyebrow">poklon koji se ne zaboravi</p>

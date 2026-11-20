@@ -1,6 +1,6 @@
 import { Play } from "lucide-react";
 import { site } from "@/config/site";
-import { Balloon, Cloud, Dino, Star } from "./characters";
+import { Cloud, Dino, Star } from "./characters";
 import { ArrowCurl, Sparkle, Squiggle } from "./doodles";
 import { Floaty } from "./Floaty";
 import { LoopVideo } from "./LoopVideo";
@@ -21,9 +21,6 @@ function Sprockets() {
 export function Hero() {
   return (
     <section aria-labelledby="hero-title" className="relative overflow-hidden pb-28 pt-6 md:pb-36 md:pt-14">
-      <Floaty speed={1} slow className="right-[3%] top-0 hidden w-14 sm:block">
-        <Balloon color="#7FD3F7" />
-      </Floaty>
       <Floaty speed={0.3} slow className="left-[42%] top-2 hidden w-32 opacity-90 lg:block">
         <Cloud />
       </Floaty>

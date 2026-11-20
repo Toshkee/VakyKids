@@ -12,6 +12,7 @@ import { Packages } from "@/components/Packages";
 import { ParallaxController } from "@/components/ParallaxController";
 import { StickyWhatsApp } from "@/components/StickyWhatsApp";
 import { StoryBuilder } from "@/components/StoryBuilder";
+import { ToyWorld } from "@/components/toys/ToyWorld";
 import { WhyUs } from "@/components/WhyUs";
 
 export default function Home() {
@@ -33,6 +34,7 @@ export default function Home() {
       <Footer />
       <StickyWhatsApp />
       <ParallaxController />
+      <ToyWorld />
     </>
   );
 }
