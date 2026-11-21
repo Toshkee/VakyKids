@@ -126,9 +126,10 @@ Before launch, in Cloudflare → Pages → vakykids → Settings → Variables a
 
 - `RESEND_API_KEY` (secret, required). Without it every order answers "server" and
   the visitor is offered WhatsApp/email instead.
-- `ORDER_NOTIFY_TO` (optional): where orders go. Default: vakymne@gmail.com.
-- `ORDER_NOTIFY_FROM` (optional): default `Vaky Kids <onboarding@vaky.me>`. vaky.me is
-  already verified in Resend. To send from `@vakykids.me`, verify that domain first.
+- `ORDER_NOTIFY_TO` (optional): where orders go. Default: vakykidsmne@gmail.com.
+- `ORDER_NOTIFY_FROM` (optional): default `Vaky Kids <narudzbe@vakykids.me>`. vakykids.me
+  must be verified in the Resend account the key belongs to (Resend → Domains), or
+  Resend answers 403 and the form falls back to WhatsApp/email.
 
 Also add a rate limiting rule (Security → WAF → Rate limiting rules): path equals
 `/api/narudzba`, method POST, about 5 requests per minute per IP, then block for 10 minutes.

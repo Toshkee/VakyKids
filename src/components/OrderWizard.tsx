@@ -447,7 +447,7 @@ export function OrderWizard() {
           </p>
           {(status === "server" || status === "offline") && (
             <a
-              href={`mailto:vakymne@gmail.com?subject=${encodeURIComponent(`Narudžba crtanog: ${name}`)}&body=${encodeURIComponent(fullMessage())}`}
+              href={`mailto:vakykidsmne@gmail.com?subject=${encodeURIComponent(`Narudžba crtanog: ${name}`)}&body=${encodeURIComponent(fullMessage())}`}
               className="btn btn-secondary btn-sm w-full"
             >
               <Mail className="size-4" aria-hidden="true" />

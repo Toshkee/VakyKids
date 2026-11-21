@@ -23,8 +23,8 @@ type Env = {
   ORDER_NOTIFY_FROM?: string;
 };
 
-const DEFAULT_TO = "vakymne@gmail.com";
-const DEFAULT_FROM = "Vaky Kids <onboarding@vaky.me>";
+const DEFAULT_TO = "vakykidsmne@gmail.com";
+const DEFAULT_FROM = "Vaky Kids <narudzbe@vakykids.me>";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const isEmail = (v: string) => v.length <= 160 && EMAIL.test(v);
@@ -116,9 +116,17 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
         html,
       }),
     });
-    if (!res.ok) return fail("server", 502);
-  } catch {
-    return fail("server", 502);
+    if (!res.ok) {
+      // Resend says why (bad key, unverified sender domain...). Visible with
+      // `wrangler pages deployment tail`; contains no order details.
+      console.error("resend", res.status, (await res.text()).slice(0, 300));
+      // 503, not 502: Cloudflare swaps a 502 body for its own error page,
+      // and the form needs this JSON to show its WhatsApp/email fallback.
+      return fail("server", 503);
+    }
+  } catch (err) {
+    console.error("resend unreachable", String(err));
+    return fail("server", 503);
   }
 
   return json({ ok: true });
