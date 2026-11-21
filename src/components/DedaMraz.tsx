@@ -125,11 +125,11 @@ export function DedaMraz() {
               <p className="mt-1.5 text-sm font-semibold text-cream/75">
                 {holidayOffer.length} · {holidayOffer.delivery}
               </p>
-              <p className="mt-0.5 text-sm font-semibold text-cream/75">Naručite do {holidayOffer.orderBy}</p>
+              <p className="mt-0.5 text-sm font-semibold text-cream/75">Javite se do {holidayOffer.orderBy}</p>
             </div>
             <PackageButton
               id="deda-mraz"
-              label="Naruči crtani"
+              label="Želim ovaj crtani"
               className="btn btn-primary shrink-0 whitespace-nowrap !border-cream !shadow-[5px_5px_0_0_#0b1430]"
             />
           </div>

@@ -16,7 +16,7 @@ export function Footer() {
         </p>
         <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
           <Link href="/#naruci" className="btn btn-primary !border-cream !shadow-[5px_5px_0_0_#231a45]">
-            Naruči crtani
+            Krenimo
           </Link>
           <a href={waLink()} target="_blank" rel="noopener" className="flex min-h-11 items-center gap-2 font-bold text-cream/85 underline decoration-2 underline-offset-4 hover:text-sun">
             <MessageCircle className="size-5" aria-hidden="true" />

@@ -472,7 +472,7 @@ export function OrderWizard() {
     <section id="naruci" aria-labelledby="naruci-title" className="relative scroll-mt-4 bg-mint-soft pb-24 pt-16 md:pb-32">
       <Wave fill="var(--color-mint-soft)" />
       <div className="mx-auto max-w-2xl px-4">
-        <p className="eyebrow text-center">naručite za dva minuta</p>
+        <p className="eyebrow text-center">samo dva minuta</p>
         <h2 id="naruci-title" className="mt-2 text-center text-4xl font-extrabold leading-[1.05] sm:text-5xl">
           {name ? `${name} dobija svoj crtani` : "Složite crtani za svoje dijete"}
         </h2>

@@ -107,7 +107,7 @@ export function Hero() {
           </p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a href="#naruci" className="btn btn-primary sticker w-full sm:w-auto">
-              Naruči crtani
+              Napravimo crtani
             </a>
             <a href="#primjer" className="btn btn-secondary sticker w-full sm:w-auto">
               <ArrowDown className="size-5" aria-hidden="true" />
