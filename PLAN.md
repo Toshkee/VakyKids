@@ -103,6 +103,18 @@ Ideas from the research, not built yet:
 - New Year timing: it is late November, the main gift season. A "Deda Mraz" / New Year film theme and a December push are worth doing now.
 - Diaspora pages later at about 99 € / 199 € / 349 € (DE net wage ~2,780 €).
 
+## Hosting (since 2026-11-21)
+
+Cloudflare Pages project `vakykids` (same account as vaky.me), live at
+https://vakykids.pages.dev and on https://vakykids.me once the domain is active.
+vakykids.me is registered at Namecheap with Cloudflare nameservers
+(anita/nick.ns.cloudflare.com); DNS is managed in Cloudflare. Deploy from this folder:
+
+    npm run deploy
+
+That builds the static site and uploads `out/` plus `functions/` with wrangler.
+There is no Git integration yet, so pushes do not deploy by themselves.
+
 ## Order form (main contact, since 2026-11-20)
 
 The order wizard ends in a contact form that posts to `/api/narudzba`

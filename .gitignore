@@ -14,4 +14,3 @@ next-env.d.ts
 
 # local Claude preview config
 /.claude
-.vercel
