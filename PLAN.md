@@ -106,7 +106,7 @@ Ideas from the research, not built yet:
 ## Hosting (since 2026-11-21)
 
 Cloudflare Pages project `vakykids` (same account as vaky.me), live at
-https://vakykids.pages.dev and on https://vakykids.me once the domain is active.
+https://vakykids.me (also www.vakykids.me and https://vakykids.pages.dev).
 vakykids.me is registered at Namecheap with Cloudflare nameservers
 (anita/nick.ns.cloudflare.com); DNS is managed in Cloudflare. Deploy from this folder:
 
