@@ -7,8 +7,6 @@ export const site = {
   /* Same number as vaky.me. International format without + or spaces. */
   whatsapp: "38267474438",
   instagram: "vakykids.me",
-  /* TODO: confirm the TikTok handle once the account exists. */
-  tiktok: "vakykids",
   /* Clips cut from the first film ("Vlaki i spašavanje dinosaurusa", 3:10)
      with ffmpeg; see public/video/. Muted, no narration. */
   teaser: { mp4: "/video/hero-teaser.mp4", poster: "/video/hero-teaser.jpg" } as null | {

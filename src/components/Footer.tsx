@@ -33,9 +33,6 @@ export function Footer() {
             <a href={`https://instagram.com/${site.instagram}`} target="_blank" rel="noopener" className="hover:text-sun">
               Instagram
             </a>
-            <a href={`https://www.tiktok.com/@${site.tiktok}`} target="_blank" rel="noopener" className="hover:text-sun">
-              TikTok
-            </a>
             <Link href="/#paketi" className="hover:text-sun">
               Paketi
             </Link>
