@@ -36,7 +36,7 @@ export const faq = [
   },
   {
     q: "Šta su uvodna i odjavna špica?",
-    a: "Svaki crtani počinje uvodnom špicom od 10 do 15 sekundi i završava se odjavnom špicom iste dužine, kao pravi crtani film. U obje su kadrovi iz vašeg crtanog, uz muziku i efekte, a ime djeteta se pojavi u naslovu i na kraju.",
+    a: "Svaki crtani počinje uvodnom špicom od 10 do 15 sekundi i završava se odjavnom špicom iste dužine, kao pravi crtani film. Između njih je animirani crtani, napravljen samo za vaše dijete.",
   },
   {
     q: "Šta vam treba od mene?",
