@@ -35,5 +35,5 @@
      not the DOM, and `@cloudflare/workers-types` conflicts with the DOM lib
      this config loads. `npm run typecheck` runs both configs. video/ is its
      own Remotion project with its own packages and tsconfig. */
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "video"]
 }

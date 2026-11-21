@@ -25,7 +25,7 @@ const stories: Story[] = [
           ["Ime", name],
           ["Uzrast", "4 godine"],
           ["Voli", "Dinosaurusi 🦕"],
-          ["Crtani", "Mini crtani"],
+          ["Crtani", "Pravi crtani"],
         ].map(([k, v]) => (
           <p key={k} className="mt-2 flex justify-between gap-3 border-b-2 border-dashed border-grape/15 pb-1.5 text-[0.95rem]">
             <span className="text-grape-soft">{k}</span>
@@ -39,19 +39,19 @@ const stories: Story[] = [
   {
     title: "Mi pravimo crtani",
     text: "Pišemo priču i režiramo scene, a likove, animaciju i muziku pravimo uz pomoć AI alata.",
-    bg: "url(/video/strip-ride.jpg) center / cover",
+    bg: "url(/video/story-ride.webp) center / cover",
     art: () => null,
   },
   {
     title: "Stiže na vaš telefon",
     text: "Za 5 dana dobijate crtani u HD kvalitetu, preko privatnog linka.",
-    bg: "url(/video/strip-title.jpg) center / cover",
+    bg: "url(/video/story-title.webp) center / cover",
     art: () => null,
   },
   {
     title: "Pustite ga na rođendanu",
     text: "Na televizoru, projektoru u igraonici ili telefonu. I gledajte mu lice.",
-    bg: "url(/video/founder-cake.jpg) center / cover",
+    bg: "url(/video/story-cake.webp) center / cover",
     art: () => null,
   },
 ];

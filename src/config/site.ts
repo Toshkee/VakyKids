@@ -63,7 +63,7 @@ export type Package = {
 /* Every crtani includes the same things; only the length differs. */
 const included = [
   "Uvodna i odjavna špica, svaka 10–15 sekundi",
-  "U špicama animirane scene iz crtanog i ime djeteta",
+  "U špicama kadrovi iz crtanog i ime djeteta",
   "Priča i junaci po vašoj želji",
   "Naracija na našem jeziku",
   "Muzika i zvučni efekti",
@@ -80,7 +80,6 @@ export const packages: Package[] = [
     features: included,
     price: 50,
     launchPrice: 35,
-    popular: true,
   },
   {
     id: "3",
@@ -91,6 +90,7 @@ export const packages: Package[] = [
     features: included,
     price: 100,
     launchPrice: 70,
+    popular: true,
   },
   {
     id: "5",

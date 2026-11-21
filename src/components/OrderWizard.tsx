@@ -71,7 +71,7 @@ export function OrderWizard() {
   const [dir, setDir] = useState<1 | -1>(1);
   const [age, setAge] = useState<number | null>(null);
   const [theme, setTheme] = useState<ThemeId | null>(null);
-  const [pkg, setPkg] = useState<string>("1");
+  const [pkg, setPkg] = useState<string>(packages.find((p) => p.popular)?.id ?? packages[0].id);
   const [date, setDate] = useState("");
   const [express, setExpress] = useState(false);
   const [nameError, setNameError] = useState(false);
