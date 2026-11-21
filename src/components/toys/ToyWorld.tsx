@@ -7,11 +7,11 @@ import { confettiBurst } from "@/lib/confetti";
    here, as its own chunk, and not at all for reduced-motion visitors or
    browsers without WebGL. */
 export function ToyWorld() {
-  const canvas = useRef<HTMLCanvasElement>(null);
+  const layer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const el = canvas.current;
+    const el = layer.current;
     if (!el) return;
     let dispose: (() => void) | undefined;
     let cancelled = false;
@@ -40,10 +40,11 @@ export function ToyWorld() {
   }, []);
 
   return (
-    <canvas
-      ref={canvas}
+    /* Holds one small canvas per toy, placed in the page so toys scroll with it. */
+    <div
+      ref={layer}
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-30 size-full opacity-0 transition-opacity duration-700"
+      className="pointer-events-none absolute left-0 top-0 z-30 h-0 w-full opacity-0 transition-opacity duration-700"
     />
   );
 }

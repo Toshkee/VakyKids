@@ -4,8 +4,8 @@
 export const site = {
   name: "Vaky Kids",
   url: "https://vakykids.me",
-  /* TODO: real number, international format without + or spaces. */
-  whatsapp: "38200000000",
+  /* Same number as vaky.me. International format without + or spaces. */
+  whatsapp: "38267474438",
   /* TODO: confirm the handles once the accounts exist. */
   instagram: "vakykids",
   tiktok: "vakykids",

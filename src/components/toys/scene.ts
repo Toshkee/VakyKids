@@ -1,10 +1,10 @@
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 
-/* A transparent 3D layer over the page with toys drawn in the site's sticker
-   style: toon shading and a dark purple outline. Toys sit at the page edges and
-   scroll past at their own speed; a bunch of balloons carrying a gift waits at
-   the bottom of the hero. Balloons pop when clicked.
+/* 3D toys drawn in the site's sticker style: toon shading and a dark purple
+   outline. Toys sit at the page edges (on wide screens they scroll past at
+   their own speed); a bunch of balloons carrying a gift waits at the bottom of
+   the hero. Balloons pop when clicked.
    Everything is built from simple shapes, so there are no models to download. */
 
 export type ToyKind = "balloons" | "balloon" | "star" | "blocks" | "ball" | "rocket" | "rings" | "teddy";
@@ -422,28 +422,49 @@ function build(kit: Kit, kind: ToyKind, color?: string): THREE.Group {
   }
 }
 
+
 /* ---------- the world ---------- */
 
-type Toy = {
+/* Each toy gets its own small 2D canvas, placed in the page like an image, so
+   it scrolls with the page natively. One hidden WebGL renderer draws every
+   visible toy and copies it into its canvas. Phones never wait on script to
+   move a toy, and resizing the address bar never wipes anything. */
+
+type Sprite = {
+  canvas: HTMLCanvasElement;
+  ctx: CanvasRenderingContext2D;
   root: THREE.Group;
   inner: THREE.Group;
-  p: Placement;
-  docY: number;
+  /* Model height in world units, used to fit it in its box. */
+  units: number;
+  p?: Placement;
   seed: number;
   spin: number;
+  on: boolean;
+  docY: number;
+  depth: number;
+  dev: number;
+  offset: number;
+  near: boolean;
+  balloons: boolean;
 };
 
 type Popping = { obj: THREE.Object3D; t: number; back: number };
 
-export function createToyWorld(
-  canvas: HTMLCanvasElement,
-  opts: { font: string; onPop: (x: number, y: number) => void },
-) {
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: "low-power" });
+const FOV = 30;
+const CAM_Z = 30;
+const VIEW = 2 * CAM_Z * Math.tan(THREE.MathUtils.degToRad(FOV / 2));
+const CONTENT = 1152;
+
+export function createToyWorld(layer: HTMLElement, opts: { font: string; onPop: (x: number, y: number) => void }) {
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "low-power" });
   renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.setPixelRatio(1);
+  renderer.setClearColor(0x000000, 0);
+  renderer.setScissorTest(true);
+  let bufferPx = 0;
+
   const scene = new THREE.Scene();
-  const FOV = 30;
-  const CAM_Z = 30;
   const camera = new THREE.PerspectiveCamera(FOV, 1, 1, 100);
   camera.position.z = CAM_Z;
   scene.add(new THREE.HemisphereLight("#ffffff", "#c9b8ff", 1.4));
@@ -452,64 +473,122 @@ export function createToyWorld(
   scene.add(sun);
 
   const kit = makeKit(opts.font);
-  const toys: Toy[] = [];
-  PLACEMENTS.forEach((p, i) => {
-    const inner = build(kit, p.kind, p.color);
+  const sprites: Sprite[] = [];
+
+  function addSprite(inner: THREE.Group, units: number, seed: number, spin: number, p?: Placement) {
+    const canvas = document.createElement("canvas");
+    canvas.style.cssText = "position:absolute;display:none;pointer-events:none";
+    layer.appendChild(canvas);
     const root = new THREE.Group();
     root.add(inner);
+    root.visible = false;
     scene.add(root);
-    toys.push({ root, inner, p, docY: 0, seed: i * 1.7 + 0.3, spin: p.kind === "ball" || p.kind === "star" ? 1 : 0.35 });
-  });
+    const s: Sprite = {
+      canvas,
+      ctx: canvas.getContext("2d")!,
+      root,
+      inner,
+      units,
+      p,
+      seed,
+      spin,
+      on: false,
+      docY: 0,
+      depth: 1,
+      dev: 0,
+      offset: 0,
+      near: false,
+      balloons: p?.kind === "balloon" || !p,
+    };
+    sprites.push(s);
+    return s;
+  }
+
+  PLACEMENTS.forEach((p, i) =>
+    addSprite(build(kit, p.kind, p.color), 2.4, i * 1.7 + 0.3, p.kind === "ball" || p.kind === "star" ? 1 : 0.35, p),
+  );
 
   // A balloon bunch with a gift, waiting at the bottom of the hero.
-  const traveller = new THREE.Group();
   const bunch = balloonBunch(kit, true);
-  traveller.add(bunch);
-  scene.add(traveller);
+  const traveller = addSprite(bunch, 5.2, 0, 0);
   const travelBalloons = bunch.children.filter((c) => c.userData.balloon);
   const gift = bunch.children.find((c) => c.userData.gift)!;
   let giftFall: { v: number; y: number } | null = null;
   let giftGrow = 1;
 
+  const flames: THREE.Object3D[] = [];
+  scene.traverse((o) => {
+    if (o.userData.flame) flames.push(o);
+  });
+
   let vw = 1;
   let vh = 1;
-  let phone = false;
-  let compact = false;
-  let gutter = 0;
-  const CONTENT = 1152;
-  let pxToWorld = 1;
-  let heroBottom = 0;
+
+  function place(s: Sprite, x: number, y: number, size: number, factor: number, layerLeft: number, layerTop: number, dpr: number) {
+    const box = Math.round(size * factor);
+    // Keep the whole box on screen, so nothing sticks out sideways.
+    const cx = THREE.MathUtils.clamp(x, box / 2, vw - box / 2);
+    const st = s.canvas.style;
+    st.display = "block";
+    st.left = `${Math.round(cx - box / 2 - layerLeft)}px`;
+    st.top = `${Math.round(y - box / 2 - layerTop)}px`;
+    st.width = st.height = `${box}px`;
+    const dev = Math.round(box * dpr);
+    // Setting a canvas size wipes it, so only do it when the size changes.
+    if (s.dev !== dev) {
+      s.canvas.width = s.canvas.height = dev;
+      s.dev = dev;
+    }
+    s.docY = y;
+    s.root.scale.setScalar(((size / box) * VIEW) / s.units);
+    s.on = true;
+  }
 
   function measure() {
-    vw = window.innerWidth;
+    vw = document.documentElement.clientWidth;
     vh = window.innerHeight;
-    phone = vw < 768;
+    const phone = vw < 768;
     // When the margins beside the content are narrower than 80px, toys sit in
     // the gaps between sections instead, never over text.
-    gutter = Math.max((vw - CONTENT) / 2, 0);
-    compact = gutter < 80;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, phone ? 1.5 : 2));
-    renderer.setSize(vw, vh, false);
-    camera.aspect = vw / vh;
-    camera.updateProjectionMatrix();
-    pxToWorld = (2 * CAM_Z * Math.tan(THREE.MathUtils.degToRad(FOV / 2))) / vh;
-    for (const t of toys) {
-      const el = document.querySelector<HTMLElement>(t.p.anchor);
-      if (!el) {
-        t.docY = NaN;
+    const gutter = Math.max((vw - CONTENT) / 2, 0);
+    const compact = gutter < 80;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const sy = window.scrollY;
+    const lr = layer.getBoundingClientRect();
+    const layerTop = lr.top + sy;
+    const layerLeft = lr.left;
+
+    for (const s of sprites) {
+      if (s === traveller) continue;
+      const p = s.p!;
+      const el = document.querySelector<HTMLElement>(p.anchor);
+      if (!el || (compact && !p.phone)) {
+        s.on = false;
+        s.canvas.style.display = "none";
         continue;
       }
       const r = el.getBoundingClientRect();
-      t.docY = compact ? r.top + window.scrollY - 6 : r.top + window.scrollY + r.height * t.p.at;
+      const docY = compact ? r.top + sy - 6 : r.top + sy + r.height * p.at;
+      // Wide screens: as big as the margin allows, centred in it.
+      const size = phone ? 58 : compact ? 72 : Math.min(p.size, gutter * 1.1);
+      const fromEdge = compact ? vw * (phone ? 0.13 : 0.08) : gutter / 2;
+      s.depth = compact ? 1 : p.depth;
+      place(s, p.side === "left" ? fromEdge : vw - fromEdge, docY, size, 1.7, layerLeft, layerTop, dpr);
     }
-    const hero = document.querySelector<HTMLElement>("section[aria-labelledby='hero-title']");
-    heroBottom = hero ? hero.getBoundingClientRect().bottom + window.scrollY : vh;
-  }
 
-  const toWorld = (obj: THREE.Object3D, xPx: number, yPx: number) => {
-    obj.position.x = (xPx - vw / 2) * pxToWorld;
-    obj.position.y = (vh / 2 - yPx) * pxToWorld;
-  };
+    const hero = document.querySelector<HTMLElement>("section[aria-labelledby='hero-title']");
+    const heroBottom = hero ? hero.getBoundingClientRect().bottom + sy : vh;
+    // Phones: it floats on the edge into the next section, clear of the hero text.
+    place(traveller, vw * 0.8, heroBottom - (compact ? 8 : 70), phone ? 104 : 130, 1.45, layerLeft, layerTop, dpr);
+
+    const need = Math.max(...sprites.map((s) => (s.on ? s.dev : 0)), 1);
+    if (need > bufferPx) {
+      bufferPx = need;
+      renderer.setSize(need, need, false);
+    }
+    // A resize may have wiped a canvas: redraw now, before the browser paints.
+    drawAll(window.scrollY);
+  }
 
   // Pointer: toys lean towards it; balloons pop on click.
   const pointer = new THREE.Vector2(0, 0);
@@ -517,14 +596,19 @@ export function createToyWorld(
   const ndc = new THREE.Vector2();
   const popping: Popping[] = [];
 
-  function balloonAt(clientX: number, clientY: number) {
-    ndc.set((clientX / vw) * 2 - 1, -(clientY / vh) * 2 + 1);
-    ray.setFromCamera(ndc, camera);
-    const hits = ray.intersectObjects(scene.children, true);
-    for (const h of hits) {
-      let o: THREE.Object3D | null = h.object;
-      while (o && !o.userData.balloon) o = o.parent;
-      if (o && o.visible && o.scale.x > 0.5) return o;
+  function balloonAt(x: number, y: number) {
+    for (const s of sprites) {
+      if (!s.on || !s.near || !s.balloons) continue;
+      const r = s.canvas.getBoundingClientRect();
+      if (x < r.left || x > r.right || y < r.top || y > r.bottom) continue;
+      ndc.set(((x - r.left) / r.width) * 2 - 1, -((y - r.top) / r.height) * 2 + 1);
+      ray.setFromCamera(ndc, camera);
+      s.root.updateMatrixWorld(true);
+      for (const h of ray.intersectObject(s.root, true)) {
+        let o: THREE.Object3D | null = h.object;
+        while (o && !o.userData.balloon) o = o.parent;
+        if (o && o.scale.x > 0.5) return o;
+      }
     }
     return null;
   }
@@ -553,63 +637,33 @@ export function createToyWorld(
 
   let lastScroll = window.scrollY;
   let velocity = 0;
-  let drewSomething = true;
+  let lean = 0;
   // Timer (not the old Clock): with connect() it ignores the time the tab was
   // hidden, so toys don't jump after you come back.
   const timer = new THREE.Timer();
   timer.connect(document);
   let raf = 0;
 
-  function frame(now?: number) {
-    raf = requestAnimationFrame(frame);
-    timer.update(now);
-    const dt = Math.min(timer.getDelta(), 0.05);
-    const time = timer.getElapsed();
-    const sy = window.scrollY;
-    velocity += ((sy - lastScroll) / Math.max(dt, 0.001) - velocity) * 0.1;
-    lastScroll = sy;
-    const lean = THREE.MathUtils.clamp(velocity / 3000, -0.35, 0.35);
-    let anyVisible = false;
-
-    for (const t of toys) {
-      if (Number.isNaN(t.docY) || (compact && !t.p.phone)) {
-        t.root.visible = false;
-        continue;
-      }
-      const yPx = compact ? t.docY - sy : vh / 2 + (t.docY - sy - vh / 2) * t.p.depth;
-      // Wide screens: as big as the margin allows, centred in it.
-      const sizePx = phone ? 58 : compact ? 72 : Math.min(t.p.size, gutter * 1.1);
-      if (yPx < -sizePx * 2 || yPx > vh + sizePx * 2) {
-        t.root.visible = false;
-        continue;
-      }
-      t.root.visible = true;
-      anyVisible = true;
-      const fromEdge = compact ? vw * (phone ? 0.13 : 0.08) : gutter / 2;
-      const xPx = t.p.side === "left" ? fromEdge : vw - fromEdge;
-      toWorld(t.root, xPx, yPx);
-      t.root.scale.setScalar((sizePx * pxToWorld) / 2.4);
-      const bob = Math.sin(time * 1.3 + t.seed) * 0.12;
-      t.inner.position.y = bob;
-      t.inner.rotation.y = Math.sin(time * 0.6 * t.spin + t.seed) * 0.6 + pointer.x * 0.35;
-      t.inner.rotation.x = -pointer.y * 0.2 + lean * 0.6;
-      t.inner.rotation.z = Math.sin(time * 0.9 + t.seed) * 0.08 - lean * 0.5;
-      if (t.p.kind === "ball") t.inner.rotation.x += time * 0.8;
+  function animate(time: number, dt: number) {
+    for (const s of sprites) {
+      if (!s.near || s === traveller) continue;
+      s.inner.position.y = Math.sin(time * 1.3 + s.seed) * 0.12;
+      s.inner.rotation.y = Math.sin(time * 0.6 * s.spin + s.seed) * 0.6 + pointer.x * 0.35;
+      s.inner.rotation.x = -pointer.y * 0.2 + lean * 0.6;
+      s.inner.rotation.z = Math.sin(time * 0.9 + s.seed) * 0.08 - lean * 0.5;
+      if (s.p?.kind === "ball") s.inner.rotation.x += time * 0.8;
     }
 
-    // The balloon bunch stays put in the empty space at the bottom of the hero.
-    const yPx = heroBottom - 70 - sy + Math.sin(time * 1.1) * 5;
-    traveller.visible = yPx > -200 && yPx < vh + 200;
-    if (traveller.visible) anyVisible = true;
-    toWorld(traveller, vw * 0.8, yPx);
-    traveller.scale.setScalar(((phone ? 104 : 130) * pxToWorld) / 5.2);
-    bunch.rotation.z = THREE.MathUtils.lerp(bunch.rotation.z, Math.sin(time * 0.7) * 0.05 - lean * 0.6, 0.08);
-    bunch.rotation.y = Math.sin(time * 0.5) * 0.4 + pointer.x * 0.2;
-    travelBalloons.forEach((b, i) => {
-      const rest = b.userData.rest as THREE.Vector3;
-      b.position.y = rest.y + Math.sin(time * 1.6 + i * 2) * 0.12;
-      b.rotation.z = Math.sin(time * 1.2 + i) * 0.08;
-    });
+    if (traveller.near) {
+      bunch.position.y = 0.6 + Math.sin(time * 1.1) * 0.25;
+      bunch.rotation.z = THREE.MathUtils.lerp(bunch.rotation.z, Math.sin(time * 0.7) * 0.05 - lean * 0.6, 0.08);
+      bunch.rotation.y = Math.sin(time * 0.5) * 0.4 + pointer.x * 0.2;
+      travelBalloons.forEach((b, i) => {
+        const rest = b.userData.rest as THREE.Vector3;
+        b.position.y = rest.y + Math.sin(time * 1.6 + i * 2) * 0.12;
+        b.rotation.z = Math.sin(time * 1.2 + i) * 0.08;
+      });
+    }
     if (giftGrow < 1) {
       giftGrow = Math.min(giftGrow + dt / 0.6, 1);
       gift.scale.setScalar(0.62 * easeOutBack(giftGrow));
@@ -619,12 +673,11 @@ export function createToyWorld(
       giftFall.y -= giftFall.v * dt;
       gift.position.y = -2.95 + giftFall.y;
       gift.rotation.z += dt * 2;
+      // Shrinks as it falls, so it is gone before it reaches the box edge.
+      gift.scale.setScalar(0.62 * Math.max(0, 1 + giftFall.y / 1.6));
     }
 
-    // Rocket flames flicker.
-    scene.traverse((o) => {
-      if (o.userData.flame) o.scale.y = 0.8 + Math.random() * 0.45;
-    });
+    for (const f of flames) f.scale.y = 0.8 + Math.random() * 0.45;
 
     // Popping balloons: a quick puff, then they grow back.
     for (let i = popping.length - 1; i >= 0; i--) {
@@ -645,23 +698,70 @@ export function createToyWorld(
         if (k >= 1) popping.splice(i, 1);
       }
     }
-
-    // Nothing on screen: draw one empty frame, then rest until a toy is back.
-    if (anyVisible || popping.length || drewSomething) renderer.render(scene, camera);
-    drewSomething = anyVisible;
   }
 
+  /* Works out which toys are on screen (with their parallax drift on wide
+     screens) and draws them. */
+  function drawAll(sy: number) {
+    for (const s of sprites) {
+      if (!s.on) {
+        s.near = false;
+        continue;
+      }
+      // Below 1 the toy scrolls slower than the page, above 1 faster.
+      const offset = s.depth === 1 ? 0 : Math.round((s.depth - 1) * (s.docY - sy - vh / 2));
+      const y = s.docY - sy + offset;
+      s.near = y > -s.dev && y < vh + s.dev;
+      if (!s.near) continue;
+      if (offset !== s.offset) {
+        s.offset = offset;
+        s.canvas.style.transform = offset ? `translate3d(0,${offset}px,0)` : "";
+      }
+      for (const o of sprites) o.root.visible = o === s;
+      renderer.setViewport(0, 0, s.dev, s.dev);
+      renderer.setScissor(0, 0, s.dev, s.dev);
+      renderer.render(scene, camera);
+      // WebGL draws from the bottom-left corner of its buffer.
+      s.ctx.clearRect(0, 0, s.dev, s.dev);
+      s.ctx.drawImage(renderer.domElement, 0, bufferPx - s.dev, s.dev, s.dev, 0, 0, s.dev, s.dev);
+    }
+  }
+
+  function frame(now?: number) {
+    raf = requestAnimationFrame(frame);
+    timer.update(now);
+    const dt = Math.min(timer.getDelta(), 0.05);
+    const time = timer.getElapsed();
+    const sy = window.scrollY;
+    velocity += ((sy - lastScroll) / Math.max(dt, 0.001) - velocity) * 0.1;
+    lastScroll = sy;
+    lean = THREE.MathUtils.clamp(velocity / 3000, -0.35, 0.35);
+    animate(time, dt);
+    drawAll(sy);
+  }
+
+  // Only a change in page width or layout moves toys. The phone address bar
+  // changing the height does not need a new layout.
+  let lastWidth = 0;
+  const onResize = () => {
+    vh = window.innerHeight;
+    if (document.documentElement.clientWidth !== lastWidth) {
+      lastWidth = document.documentElement.clientWidth;
+      measure();
+    }
+  };
   measure();
+  lastWidth = vw;
   const ro = new ResizeObserver(() => measure());
   ro.observe(document.body);
-  window.addEventListener("resize", measure);
+  window.addEventListener("resize", onResize);
   frame();
 
   return () => {
     cancelAnimationFrame(raf);
     timer.dispose();
     ro.disconnect();
-    window.removeEventListener("resize", measure);
+    window.removeEventListener("resize", onResize);
     window.removeEventListener("pointermove", onMove);
     window.removeEventListener("pointerdown", onDown);
     document.documentElement.style.cursor = "";
@@ -676,6 +776,7 @@ export function createToyWorld(
       }
     });
     renderer.dispose();
+    for (const s of sprites) s.canvas.remove();
   };
 }
 
