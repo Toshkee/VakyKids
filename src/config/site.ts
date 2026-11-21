@@ -18,13 +18,13 @@ export const site = {
   filmTitle: "Vlaki i spašavanje dinosaurusa",
 };
 
-/* Founding-family offer: the first five clients pay the launch price in
+/* Promo offer: the first three families pay the launch price in
    exchange for a short review and permission to show the film as a sample.
    Lower spotsLeft by hand after each booking; at 0 the site shows only the
    regular prices. */
 export const launchOffer = {
-  spotsTotal: 5,
-  spotsLeft: 5,
+  spotsTotal: 3,
+  spotsLeft: 3,
 };
 
 export const isLaunchActive = () => launchOffer.spotsLeft > 0;
@@ -115,6 +115,15 @@ export const waLink = (text?: string) =>
   `https://wa.me/${site.whatsapp}${text ? `?text=${encodeURIComponent(text)}` : ""}`;
 
 /* Montenegrin plural for "mjesto": 1 mjesto, 2–4 mjesta, 5+ mjesta. */
+/* "prvu porodicu", "prve 3 porodice", "prvih 5 porodica". */
+export const firstFamilies = (n: number) => {
+  const lastTwo = n % 100;
+  const last = n % 10;
+  if (n === 1) return "prvu porodicu";
+  if (last >= 2 && last <= 4 && (lastTwo < 12 || lastTwo > 14)) return `prve ${n} porodice`;
+  return `prvih ${n} porodica`;
+};
+
 export const spotsLabel = (n: number) => {
   const lastTwo = n % 100;
   const last = n % 10;

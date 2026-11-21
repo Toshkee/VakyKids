@@ -1,5 +1,5 @@
 import { Check, Clock, Film } from "lucide-react";
-import { addons, formatPrice, isLaunchActive, launchOffer, packages, spotsLabel } from "@/config/site";
+import { addons, firstFamilies, formatPrice, isLaunchActive, launchOffer, packages, spotsLabel } from "@/config/site";
 import { PackageButton } from "./PackageButton";
 import { TicketStub } from "./TicketStub";
 import { Wave } from "./Wave";
@@ -16,7 +16,7 @@ export function Packages() {
       <div className="relative mx-auto max-w-6xl px-4">
         <p className="eyebrow text-center">paketi i cijene</p>
         <h2 id="paketi-title" className="mt-2 text-center text-4xl font-extrabold leading-[1.05] sm:text-5xl">
-          Izaberite svoju ulaznicu
+          Izaberite svoj crtani
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-center text-lg text-grape-soft">
           Svaki crtani je napravljen samo za vaše dijete. Plaćate jednom, crtani je vaš zauvijek.
@@ -25,7 +25,7 @@ export function Packages() {
         {launch && (
           <div className="mx-auto mt-8 max-w-2xl rotate-[-1deg] rounded-3xl border-[3px] border-dashed border-grape bg-white px-5 py-4 text-center">
             <p className="font-display text-xl font-semibold">
-              Osnivačka cijena za prvih {launchOffer.spotsTotal} porodica
+              Promo cijena za {firstFamilies(launchOffer.spotsTotal)}
               <span className="ml-2 inline-block rounded-full bg-coral-deep px-3 py-0.5 text-base text-white">
                 još {spotsLabel(launchOffer.spotsLeft)}
               </span>
@@ -37,7 +37,7 @@ export function Packages() {
         )}
 
         {/* Phones: a row of tickets to swipe through, the next one peeking in. */}
-        <p className="hand mt-8 text-center text-2xl text-grape/70 lg:hidden">povucite ulaznice u stranu →</p>
+        <p className="hand mt-8 text-center text-2xl text-grape/70 lg:hidden">povucite u stranu →</p>
         <ul className="-mx-4 mt-2 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-6 pt-12 [scrollbar-width:none] sm:gap-6 lg:mx-0 lg:mt-14 lg:grid lg:grid-cols-3 lg:items-start lg:gap-8 lg:overflow-visible lg:p-0">
           {packages.map((p) => {
             const showLaunch = launch && p.launchPrice !== undefined;
@@ -50,8 +50,7 @@ export function Packages() {
                 )}
                 <article className="card sticker relative overflow-visible !border-[3px]">
                   <div className="px-6 pb-6 pt-7">
-                    <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-coral-deep">Ulaznica</p>
-                    <h3 className="mt-1 text-3xl font-extrabold">{p.name}</h3>
+                    <h3 className="text-3xl font-extrabold">{p.name}</h3>
                     <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 font-semibold">
                       <span className="flex items-center gap-1.5">
                         <Film className="size-5" aria-hidden="true" />
@@ -88,7 +87,7 @@ export function Packages() {
                             <s>{formatPrice(p.price)}</s>
                           </p>
                           <p className="font-display text-4xl font-bold">
-                            <span className="sr-only">Osnivačka cijena </span>
+                            <span className="sr-only">Promo cijena </span>
                             {formatPrice(p.launchPrice!)}
                           </p>
                         </>
