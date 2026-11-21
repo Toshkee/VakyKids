@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
-import { Car, Check, ChevronLeft, Crown, Mail, MessageCircle, PawPrint, PartyPopper, Pencil, Send, Sparkles, Zap } from "lucide-react";
+import { Check, ChevronLeft, Mail, MessageCircle, PartyPopper, Pencil, Send } from "lucide-react";
 import { formatPrice, holidayOffer, isHolidayActive, isLaunchActive, packages, waLink } from "@/config/site";
 import { themes, type ThemeId } from "@/content/home";
 import { confettiBurst } from "@/lib/confetti";
@@ -22,16 +22,16 @@ const formatDate = (iso: string) => {
   return `${d}.${m}.${y}.`;
 };
 
-/* Themes with a painted scene get a picture; the rest an icon. */
+/* Every theme gets a painted scene. */
 const themeArt: Record<ThemeId, ReactNode> = {
   dino: <Thumb src="/spica/dino/valley.webp" />,
   svemir: <Thumb src="/spica/svemir/journey.webp" />,
   more: <Thumb src="/spica/blago/journey.webp" />,
-  princeze: <Crown className="size-9" aria-hidden="true" />,
-  superheroji: <Zap className="size-9" aria-hidden="true" />,
-  zivotinje: <PawPrint className="size-9" aria-hidden="true" />,
-  autici: <Car className="size-9" aria-hidden="true" />,
-  drugo: <Sparkles className="size-9" aria-hidden="true" />,
+  princeze: <Thumb src="/teme/princeze.webp" />,
+  superheroji: <Thumb src="/teme/superheroji.webp" />,
+  zivotinje: <Thumb src="/teme/zivotinje.webp" />,
+  autici: <Thumb src="/teme/autici.webp" />,
+  drugo: <Thumb src="/teme/drugo.webp" />,
 };
 
 function Thumb({ src }: { src: string }) {
@@ -331,7 +331,7 @@ export function OrderWizard() {
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="mt-2 w-full rounded-2xl border-[3px] border-grape bg-white px-4 py-3 text-lg font-semibold outline-none"
+              className="mt-2 block min-h-[3.4rem] w-full min-w-0 max-w-full appearance-none rounded-2xl border-[3px] border-grape bg-white px-4 py-3 text-left text-lg font-semibold outline-none [&::-webkit-date-and-time-value]:text-left"
             />
           </div>
           {[
