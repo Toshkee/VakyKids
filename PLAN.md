@@ -113,7 +113,10 @@ vakykids.me is registered at Namecheap with Cloudflare nameservers
     npm run deploy
 
 That builds the static site and uploads `out/` plus `functions/` with wrangler.
-There is no Git integration yet, so pushes do not deploy by themselves.
+Every push to `main` deploys by itself: the Pages project is connected to the
+GitHub repo (Cloudflare's Git integration, same as Vaky.me), build command
+`npm run build`, output folder `out`. `npm run deploy` still works for a manual
+upload from this Mac.
 
 ## Order form (main contact, since 2026-11-20)
 
