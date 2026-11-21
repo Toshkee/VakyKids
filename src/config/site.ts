@@ -53,7 +53,7 @@ export type Package = {
   scenes: string;
   delivery: string;
   features: string[];
-  /* Regular price in EUR. For the 5-minute film this is a "from" price. */
+  /* Regular price in EUR. */
   price: number;
   launchPrice?: number;
   fromPrice?: boolean;
@@ -73,8 +73,8 @@ export const packages: Package[] = [
       "Muzika i zvučni efekti",
       "Dva kruga izmjena",
     ],
-    price: 79,
-    launchPrice: 49,
+    price: 50,
+    launchPrice: 35,
     popular: true,
   },
   {
@@ -89,8 +89,8 @@ export const packages: Package[] = [
       "Naracija, muzika i zvučni efekti",
       "Dva kruga izmjena",
     ],
-    price: 169,
-    launchPrice: 119,
+    price: 100,
+    launchPrice: 70,
   },
   {
     id: "5",
@@ -103,8 +103,8 @@ export const packages: Package[] = [
       "Više likova iz porodice",
       "Sve iz paketa Pravi crtani",
     ],
-    price: 279,
-    fromPrice: true,
+    price: 180,
+    launchPrice: 130,
   },
 ];
 
