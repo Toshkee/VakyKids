@@ -73,7 +73,6 @@ export function OrderWizard() {
   const [theme, setTheme] = useState<ThemeId | null>(null);
   const [pkg, setPkg] = useState<string>("1");
   const [date, setDate] = useState("");
-  const [voice, setVoice] = useState(false);
   const [express, setExpress] = useState(false);
   const [nameError, setNameError] = useState(false);
   const [parent, setParent] = useState("");
@@ -144,7 +143,7 @@ export function OrderWizard() {
       `Paket: ${pick.name} (${pick.length})`,
       date ? `Crtani nam treba do: ${formatDate(date)}` : "",
     ].filter((l, i) => l || i === 1);
-    const extras = [voice && "priču čita neko iz porodice", express && "ekspresna izrada"].filter(Boolean);
+    const extras = [express && "ekspresna izrada"].filter(Boolean);
     if (extras.length) lines.push(`Dodaci: ${extras.join(", ")}`);
     return lines.join("\n");
   };
@@ -183,7 +182,7 @@ export function OrderWizard() {
           likes: t?.label ?? "",
           pkg: `${pick.name} (${pick.length}, ${pick.from ? "od " : ""}${formatPrice(pick.price)})`,
           deadline: date ? formatDate(date) : "",
-          extras: [voice && "priču čita neko iz porodice", express && "ekspresna izrada"].filter(Boolean).join(", "),
+          extras: express ? "ekspresna izrada" : "",
           note: note.trim(),
           website: trap,
         }),
@@ -336,7 +335,6 @@ export function OrderWizard() {
             />
           </div>
           {[
-            { on: voice, set: setVoice, label: "Priču čita mama, baka ili đed", price: "+20 €" },
             { on: express, set: setExpress, label: "Ekspresno, za 48 sati", price: "+30 €" },
           ].map((x) => (
             <button
@@ -366,10 +364,10 @@ export function OrderWizard() {
               { k: "Glavni junak", v: name, at: 0 },
               { k: "Uzrast", v: age ? ageLabel(age) : "—", at: 1 },
               { k: "Voli", v: themes.find((t) => t.id === theme)?.label ?? "—", at: 2 },
-              { k: "Crtani", v: `${pick.name} · ${pick.from ? "od " : ""}${formatPrice(pick.price)}`, at: 3 },
+              { k: "Crtani", v: <>{pick.name} · <span className="whitespace-nowrap">{pick.from ? "od " : ""}{formatPrice(pick.price)}</span></>, at: 3 },
               {
                 k: "Dodaci",
-                v: [date && `do ${formatDate(date)}`, voice && "glas porodice", express && "ekspresno"].filter(Boolean).join(", ") || "—",
+                v: [date && `do ${formatDate(date)}`, express && "ekspresno"].filter(Boolean).join(", ") || "—",
                 at: 4,
               },
             ].map((r) => (
@@ -395,7 +393,6 @@ export function OrderWizard() {
             { id: ids.email, label: "Email", hint: "", value: email, set: setEmail, type: "email", auto: "email", ph: "ime@primjer.com", bad: status === "email" || status === "contact" },
           ].map((f) => (
             <div key={f.id}>
-              {f.id === ids.phone && <p className="mb-3 text-sm font-semibold text-grape-soft">Dovoljan je telefon ili email.</p>}
               <label htmlFor={f.id} className="block font-display text-lg font-semibold">
                 {f.label}
                 {f.hint && <span className="font-sans text-sm font-normal text-grape-soft"> ({f.hint})</span>}
@@ -414,6 +411,7 @@ export function OrderWizard() {
                   f.bad ? "border-coral-deep" : "border-grape"
                 }`}
               />
+              {f.id === ids.email && <p className="mt-2 text-sm font-semibold text-grape-soft">Dovoljan je telefon ili email.</p>}
             </div>
           ))}
           <div>
@@ -524,7 +522,7 @@ export function OrderWizard() {
 
             <div
               key={step}
-              className="mt-6 min-h-[22rem]"
+              className="mt-6 min-h-[15rem] sm:min-h-[22rem]"
               style={{ animation: `${dir === 1 ? "step-in" : "step-back"} 320ms cubic-bezier(0.22,1,0.36,1)` }}
             >
               <h3 ref={headingRef} tabIndex={-1} className="font-display text-2xl font-extrabold leading-tight outline-none sm:text-3xl">

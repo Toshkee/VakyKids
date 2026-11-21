@@ -383,7 +383,7 @@ export function Spica({
           played.current = theme.id;
           setRun((n) => n + 1);
         }}
-        className="absolute bottom-[4%] right-[3%] inline-flex items-center gap-1.5 rounded-full border-2 border-white/70 bg-black/35 px-3 py-1.5 text-sm font-bold text-white opacity-0 backdrop-blur-sm transition-colors hover:bg-black/55"
+        className="absolute bottom-[4%] right-[3%] inline-flex items-center gap-1.5 rounded-full border-2 border-white/70 bg-black/35 px-3.5 py-2.5 text-sm font-bold text-white opacity-0 backdrop-blur-sm transition-colors hover:bg-black/55"
       >
         <RotateCcw className="size-4" aria-hidden="true" />
         Pusti ponovo

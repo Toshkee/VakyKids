@@ -5,7 +5,7 @@ import { site } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Privatnost — Vaky Kids",
-  description: "Kako Vaky Kids čuva fotografije, glas i podatke vašeg djeteta.",
+  description: "Kako Vaky Kids čuva fotografije i podatke vašeg djeteta.",
   alternates: { canonical: "/privatnost/" },
 };
 
@@ -21,26 +21,26 @@ const sections = [
   {
     h: "Koje podatke koristimo",
     p: [
-      "Ime i uzrast djeteta, ono što dijete voli, fotografije koje nam pošaljete da bismo napravili lik, i snimak glasa ako želite da priču ispriča neko iz porodice.",
-      "Narudžbu nam šaljete preko forme na sajtu: ime djeteta, uzrast, šta voli, vaše ime i telefon ili email. Forma nam stiže emailom (preko servisa Resend) i ne čuvamo je u bazi. Fotografije i snimak glasa šaljete tek kada vam se javimo. Možete nam pisati i preko WhatsApp-a ili Instagrama.",
+      "Ime i uzrast djeteta, ono što dijete voli i fotografije koje nam pošaljete da bismo napravili lik.",
+      "Narudžbu nam šaljete preko forme na sajtu: ime djeteta, uzrast, šta voli, vaše ime i telefon ili email. Forma nam stiže emailom (preko servisa Resend) i ne čuvamo je u bazi. Fotografije šaljete tek kada vam se javimo. Možete nam pisati i preko WhatsApp-a ili Instagrama.",
     ],
   },
   {
     h: "Saglasnost",
     p: [
-      "Prije početka rada tražimo pisanu saglasnost roditelja ili staratelja za korišćenje fotografija djeteta i, ako ga ima, za pravljenje glasa od snimka.",
+      "Prije početka rada tražimo pisanu saglasnost roditelja ili staratelja za korišćenje fotografija djeteta.",
     ],
   },
   {
     h: "Alati koje koristimo",
     p: [
-      "Likove, animaciju, naraciju i muziku pravimo uz pomoć AI alata (Higgsfield i ElevenLabs) na plaćenim planovima. Fotografije i snimci glasa se obrađuju na njihovim serverima samo u svrhu izrade vašeg crtanog.",
+      "Likove, animaciju, naraciju i muziku pravimo uz pomoć AI alata (Higgsfield i ElevenLabs) na plaćenim planovima. Fotografije se obrađuju na njihovim serverima samo u svrhu izrade vašeg crtanog.",
     ],
   },
   {
     h: "Koliko dugo čuvamo podatke",
     p: [
-      "Fotografije i snimke glasa brišemo čim isporučimo crtani i završimo izmjene. Gotov crtani ne objavljujemo bez vaše posebne dozvole.",
+      "Fotografije brišemo čim isporučimo crtani i završimo izmjene. Gotov crtani ne objavljujemo bez vaše posebne dozvole.",
     ],
   },
   {
@@ -64,7 +64,7 @@ export default function PrivacyPage() {
       <main className="mx-auto max-w-3xl px-4 pb-32 pt-8">
         <h1 className="text-4xl font-bold sm:text-5xl">Privatnost</h1>
         <p className="mt-4 text-lg text-grape-soft">
-          Radimo sa fotografijama i glasom vaše djece, pa to shvatamo ozbiljno. Evo jednostavno šta radimo s
+          Radimo sa fotografijama vaše djece, pa to shvatamo ozbiljno. Evo jednostavno šta radimo s
           podacima.
         </p>
         <div className="mt-10 space-y-8">

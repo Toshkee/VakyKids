@@ -133,7 +133,7 @@ export function DedaMraz() {
               className="btn btn-primary shrink-0 whitespace-nowrap !border-cream !shadow-[5px_5px_0_0_#0b1430]"
             />
           </div>
-          <a href={order} target="_blank" rel="noopener" className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-cream/80 underline decoration-2 underline-offset-4 hover:text-sun">
+          <a href={order} target="_blank" rel="noopener" className="mt-2 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-cream/80 underline decoration-2 underline-offset-4 hover:text-sun">
             <MessageCircle className="size-4" aria-hidden="true" />
             ili pišite na WhatsApp
           </a>

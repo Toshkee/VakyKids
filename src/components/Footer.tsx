@@ -8,7 +8,7 @@ import { Wave } from "./Wave";
 export function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="relative bg-grape pb-28 pt-16 text-cream md:pb-14">
+    <footer className="relative bg-grape pb-14 pt-16 text-cream">
       <Wave fill="var(--color-grape)" />
       <div className="mx-auto max-w-6xl px-4">
         <p className="max-w-3xl font-display text-4xl font-extrabold leading-[1.05] sm:text-6xl">
@@ -18,7 +18,7 @@ export function Footer() {
           <Link href="/#naruci" className="btn btn-primary !border-cream !shadow-[5px_5px_0_0_#231a45]">
             Naruči crtani
           </Link>
-          <a href={waLink()} target="_blank" rel="noopener" className="flex items-center gap-2 font-bold text-cream/85 underline decoration-2 underline-offset-4 hover:text-sun">
+          <a href={waLink()} target="_blank" rel="noopener" className="flex min-h-11 items-center gap-2 font-bold text-cream/85 underline decoration-2 underline-offset-4 hover:text-sun">
             <MessageCircle className="size-5" aria-hidden="true" />
             ili pišite na WhatsApp
           </a>
@@ -29,7 +29,7 @@ export function Footer() {
             <Logo onDark size="lg" />
             <p className="mt-3 text-cream/80">Personalizovani crtani filmovi za djecu, iz Podgorice.</p>
           </div>
-          <nav aria-label="Linkovi u podnožju" className="grid grid-cols-2 gap-x-14 gap-y-3 text-lg font-bold">
+          <nav aria-label="Linkovi u podnožju" className="grid grid-cols-2 gap-x-14 gap-y-1 text-lg font-bold [&>a]:flex [&>a]:min-h-11 [&>a]:items-center">
             <a href={`https://instagram.com/${site.instagram}`} target="_blank" rel="noopener" className="hover:text-sun">
               Instagram
             </a>
@@ -50,7 +50,7 @@ export function Footer() {
           <p className="flex items-center gap-2">
             <Sparkle className="size-3 text-sun" />
             Made by{" "}
-            <a href="https://vaky.me" className="font-bold text-cream underline-offset-4 hover:underline">
+            <a href="https://vaky.me" className="inline-flex min-h-11 items-center font-bold text-cream underline-offset-4 hover:underline">
               Vaky.me
             </a>
           </p>

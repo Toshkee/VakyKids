@@ -23,7 +23,7 @@ export const themes: { id: ThemeId; label: string }[] = [
 ];
 
 export const safety = [
-  "Za fotografije i glas tražimo vašu pisanu saglasnost.",
+  "Za fotografije tražimo vašu pisanu saglasnost.",
   "Fotografije brišemo čim isporučimo crtani.",
   "Crtani ne objavljujemo bez vaše dozvole.",
   "Crtani dobijate preko privatnog linka.",
@@ -37,10 +37,6 @@ export const faq = [
   {
     q: "Šta vam treba od mene?",
     a: "Ime i uzrast djeteta, šta voli (dinosaurusi, svemir, omiljena igračka…), nekoliko fotografija da bismo lik napravili sličnim i datum kada vam crtani treba. Ime, uzrast i šta voli upišete u formu na sajtu, a fotografije pošaljete kad vam se javimo.",
-  },
-  {
-    q: "Može li priču ispričati baka ili đed?",
-    a: "Može. Uz pisanu saglasnost, od kratkog snimka glasa napravimo naraciju njihovim glasom. Ta opcija košta 20 € više.",
   },
   {
     q: "Možete li ubaciti Elzu, Paw Patrol ili Spajdermena?",

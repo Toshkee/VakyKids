@@ -60,6 +60,15 @@ export type Package = {
   popular?: boolean;
 };
 
+/* Every crtani includes the same things; only the length differs. */
+const included = [
+  "Ime djeteta u najavnoj i odjavnoj špici",
+  "Priča i junaci po vašoj želji",
+  "Naracija na našem jeziku",
+  "Muzika i zvučni efekti",
+  "Dva kruga izmjena",
+];
+
 export const packages: Package[] = [
   {
     id: "1",
@@ -67,12 +76,7 @@ export const packages: Package[] = [
     length: "1 minut",
     scenes: "oko 8 scena",
     delivery: "gotov za 5 dana",
-    features: [
-      "Ime djeteta u najavnoj i odjavnoj špici",
-      "Naracija na našem jeziku",
-      "Muzika i zvučni efekti",
-      "Dva kruga izmjena",
-    ],
+    features: included,
     price: 50,
     launchPrice: 35,
     popular: true,
@@ -83,12 +87,7 @@ export const packages: Package[] = [
     length: "3 minute",
     scenes: "oko 20 scena",
     delivery: "gotov za 7 dana",
-    features: [
-      "Cijela priča sa uvodom i odjavnom špicom",
-      "Junaci i prijatelji po vašoj želji",
-      "Naracija, muzika i zvučni efekti",
-      "Dva kruga izmjena",
-    ],
+    features: included,
     price: 100,
     launchPrice: 70,
   },
@@ -98,11 +97,7 @@ export const packages: Package[] = [
     length: "5 minuta",
     scenes: "oko 35 scena",
     delivery: "rok po dogovoru",
-    features: [
-      "Velika avantura u više činova",
-      "Više likova iz porodice",
-      "Sve iz paketa Pravi crtani",
-    ],
+    features: included,
     price: 180,
     launchPrice: 130,
   },
@@ -110,7 +105,6 @@ export const packages: Package[] = [
 
 export const addons = [
   { label: "Dodatna scena", price: "od 15 €" },
-  { label: "Priču čita mama, tata, baka ili đed", price: "+20 €" },
   { label: "Ekspresna izrada za 48 sati", price: "+30 €" },
 ];
 

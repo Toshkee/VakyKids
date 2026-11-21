@@ -51,7 +51,7 @@ export function Founder() {
           <ol className="mt-5 grid gap-x-10 gap-y-4 sm:grid-cols-2">
             {safety.map((s, i) => (
               <li key={s} className="flex gap-3 text-lg">
-                <span className="font-display text-2xl font-extrabold leading-none text-wa">{i + 1}.</span>
+                <span className="w-7 shrink-0 font-display text-2xl font-extrabold leading-none text-wa">{i + 1}.</span>
                 {s}
               </li>
             ))}

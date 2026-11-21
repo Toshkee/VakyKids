@@ -37,12 +37,12 @@ export function Packages() {
         )}
 
         {/* Phones: a row of tickets to swipe through, the next one peeking in. */}
-        <p className="hand mt-8 text-center text-2xl text-grape/70 md:hidden">povucite ulaznice u stranu →</p>
-        <ul className="-mx-4 mt-2 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-6 pt-12 [scrollbar-width:none] md:mx-0 md:mt-14 md:grid md:grid-cols-3 md:items-start md:gap-6 md:overflow-visible md:p-0 lg:gap-8">
+        <p className="hand mt-8 text-center text-2xl text-grape/70 lg:hidden">povucite ulaznice u stranu →</p>
+        <ul className="-mx-4 mt-2 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-6 pt-12 [scrollbar-width:none] sm:gap-6 lg:mx-0 lg:mt-14 lg:grid lg:grid-cols-3 lg:items-start lg:gap-8 lg:overflow-visible lg:p-0">
           {packages.map((p) => {
             const showLaunch = launch && p.launchPrice !== undefined;
             return (
-              <li key={p.id} className={`relative w-[84%] shrink-0 snap-center md:w-auto ${p.popular ? "md:-mt-4" : ""}`}>
+              <li key={p.id} className="relative w-[84%] max-w-sm shrink-0 snap-center sm:w-[46%] lg:w-auto lg:max-w-none">
                 {p.popular && (
                   <span className="absolute -right-1 -top-9 z-10 flex size-20 rotate-12 sm:-right-3 items-center justify-center rounded-full border-[3px] border-grape bg-coral-deep text-center font-display text-[13px] font-semibold leading-tight text-white shadow-sticker">
                     Najpopu&shy;larniji
@@ -99,7 +99,7 @@ export function Packages() {
                         </p>
                       )}
                     </div>
-                    <div className="w-full min-[420px]:w-36 md:w-full lg:w-36">
+                    <div className="w-full min-[420px]:w-36">
                       <PackageButton id={p.id} label={p.fromPrice ? "Pitajte nas" : "Izaberi"} />
                     </div>
                   </div>
@@ -111,7 +111,7 @@ export function Packages() {
 
         <div className="mx-auto mt-14 max-w-3xl rounded-3xl border-[2.5px] border-dashed border-grape/40 px-6 py-6">
           <h3 className="hand text-center text-3xl">i još, po želji</h3>
-          <ul className="mt-3 grid gap-x-8 gap-y-2 sm:grid-cols-3">
+          <ul className="mt-3 grid gap-x-8 gap-y-2 sm:grid-cols-2">
             {addons.map((a) => (
               <li key={a.label} className="text-center">
                 <span className="block font-semibold">{a.label}</span>
