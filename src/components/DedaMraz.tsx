@@ -22,7 +22,7 @@ const theme: SpicaTheme = {
 };
 
 const included = [
-  "Deda Mraz doleti saonicama i pozove dijete po imenu",
+  "Deda Mraz doleti sankama i pozove dijete po imenu",
   "Pohvali ga za ono što je ove godine naučilo ili uradilo",
   "Vaše dijete se pojavi kao crtani junak, pored jelke",
   "Na kraju ga čeka poklon, uz muziku i naraciju",
