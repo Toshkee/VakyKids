@@ -62,7 +62,8 @@ export type Package = {
 
 /* Every crtani includes the same things; only the length differs. */
 const included = [
-  "Ime djeteta u najavnoj i odjavnoj špici",
+  "Uvodna i odjavna špica, svaka 10–15 sekundi",
+  "U špicama animirane scene iz crtanog i ime djeteta",
   "Priča i junaci po vašoj želji",
   "Naracija na našem jeziku",
   "Muzika i zvučni efekti",

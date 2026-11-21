@@ -35,6 +35,10 @@ export const faq = [
     a: "Mini crtani je gotov za 5 dana, a Pravi crtani za 7 dana. Ako vam treba brže, ekspresna izrada za 48 sati košta 30 € više.",
   },
   {
+    q: "Šta su uvodna i odjavna špica?",
+    a: "Svaki crtani počinje uvodnom špicom od 10 do 15 sekundi i završava se odjavnom špicom iste dužine, kao pravi crtani film. U obje su animirane scene iz vašeg crtanog, a ime djeteta se pojavi u naslovu i na kraju.",
+  },
+  {
     q: "Šta vam treba od mene?",
     a: "Ime i uzrast djeteta, šta voli (dinosaurusi, svemir, omiljena igračka…), nekoliko fotografija da bismo lik napravili sličnim i datum kada vam crtani treba. Ime, uzrast i šta voli upišete u formu na sajtu, a fotografije pošaljete kad vam se javimo.",
   },
