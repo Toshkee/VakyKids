@@ -26,7 +26,7 @@ const formatDate = (iso: string) => {
 const themeArt: Record<ThemeId, ReactNode> = {
   dino: <Thumb src="/spica/dino/valley.webp" />,
   svemir: <Thumb src="/spica/svemir/journey.webp" />,
-  more: <Thumb src="/spica/blago/journey.webp" />,
+  more: <Thumb src="/teme/more.webp" />,
   princeze: <Thumb src="/teme/princeze.webp" />,
   superheroji: <Thumb src="/teme/superheroji.webp" />,
   zivotinje: <Thumb src="/teme/zivotinje.webp" />,
