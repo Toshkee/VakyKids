@@ -22,7 +22,7 @@ export const site = {
    regular prices. */
 export const launchOffer = {
   spotsTotal: 3,
-  spotsLeft: 3,
+  spotsLeft: 2,
 };
 
 export const isLaunchActive = () => launchOffer.spotsLeft > 0;
