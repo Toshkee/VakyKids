@@ -103,7 +103,7 @@ export function Hero() {
         <div className="lg:col-start-1 lg:row-start-2">
           <p className="max-w-lg text-lg leading-relaxed text-grape-soft">
             Crtani u kojem vaše dijete spašava, leti i istražuje. Sa svojim imenom, omiljenim stvarima i naracijom na
-            našem jeziku.
+            našem jeziku. Za rođendan, praznik ili bilo koji važan trenutak.
           </p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a href="#naruci" className="btn btn-primary sticker w-full sm:w-auto">

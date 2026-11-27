@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
-import { Check, ChevronLeft, Mail, MessageCircle, PartyPopper, Pencil, Send } from "lucide-react";
+import { Baby, Backpack, Cake, Check, ChevronLeft, Footprints, Gift, Heart, Mail, Medal, MessageCircle, PartyPopper, Pencil, Send, Sparkles, type LucideIcon } from "lucide-react";
 import { formatPrice, holidayOffer, isHolidayActive, isLaunchActive, packages, waLink } from "@/config/site";
-import { themes, type ThemeId } from "@/content/home";
+import { occasions, themes, type OccasionId, type ThemeId } from "@/content/home";
 import { confettiBurst } from "@/lib/confetti";
 import { useHero } from "@/lib/hero";
 import { PACKAGE_EVENT } from "./PackageButton";
@@ -34,6 +34,17 @@ const themeArt: Record<ThemeId, ReactNode> = {
   drugo: <Thumb src="/teme/drugo.webp" />,
 };
 
+const occasionIcon: Record<OccasionId, LucideIcon> = {
+  rodjendan: Cake,
+  praznik: Gift,
+  beba: Baby,
+  "prvi-dan": Backpack,
+  "novi-korak": Footprints,
+  uspjeh: Medal,
+  iznenadjenje: Heart,
+  drugo: Sparkles,
+};
+
 function Thumb({ src }: { src: string }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
@@ -43,7 +54,7 @@ function Thumb({ src }: { src: string }) {
 
 type Choice = { id: string; name: string; length: string; price: number; from?: boolean; popular?: boolean };
 
-const STEPS = ["ime", "uzrast", "tema", "paket", "dodaci", "pregled", "kontakt"] as const;
+const STEPS = ["ime", "uzrast", "povod", "tema", "paket", "dodaci", "pregled", "kontakt"] as const;
 
 type Status = "idle" | "sending" | "sent" | "parent" | "contact" | "phone" | "email" | "server" | "offline";
 
@@ -70,6 +81,7 @@ export function OrderWizard() {
   const [step, setStep] = useState(0);
   const [dir, setDir] = useState<1 | -1>(1);
   const [age, setAge] = useState<number | null>(null);
+  const [occasion, setOccasion] = useState<OccasionId | null>(null);
   const [theme, setTheme] = useState<ThemeId | null>(null);
   const [pkg, setPkg] = useState<string>(packages.find((p) => p.popular)?.id ?? packages[0].id);
   const [date, setDate] = useState("");
@@ -131,6 +143,7 @@ export function OrderWizard() {
 
   const pick = choices.find((c) => c.id === pkg) ?? choices[0];
   const who = name || "vaše dijete";
+  const occ = occasions.find((o) => o.id === occasion);
 
   const message = () => {
     const t = themes.find((x) => x.id === theme);
@@ -139,6 +152,7 @@ export function OrderWizard() {
       "",
       `Ime djeteta: ${name}`,
       age ? `Uzrast: ${ageLabel(age)}` : "",
+      occ ? `Povod: ${occ.label}` : "",
       t ? `Šta najviše voli: ${t.label}` : "",
       `Paket: ${pick.name} (${pick.length})`,
       date ? `Crtani nam treba do: ${formatDate(date)}` : "",
@@ -179,6 +193,7 @@ export function OrderWizard() {
           email: email.trim(),
           child: name,
           age: age ? ageLabel(age) : "",
+          occasion: occ?.label ?? "",
           likes: t?.label ?? "",
           pkg: `${pick.name} (${pick.length}, ${pick.from ? "od " : ""}${formatPrice(pick.price)})`,
           deadline: date ? formatDate(date) : "",
@@ -263,6 +278,29 @@ export function OrderWizard() {
               {n}
             </button>
           ))}
+        </div>
+      ),
+    },
+    {
+      title: "Za koju priliku?",
+      body: (
+        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+          {occasions.map((o) => {
+            const Icon = occasionIcon[o.id];
+            return (
+              <button
+                key={o.id}
+                type="button"
+                aria-pressed={occasion === o.id}
+                onClick={() => pickAndGo(() => setOccasion(o.id))}
+                className={`${tile} flex min-h-28 flex-col items-center justify-center gap-1.5 p-2.5 text-center text-base leading-tight`}
+              >
+                <Icon className="size-8 text-coral-deep" strokeWidth={2.25} aria-hidden="true" />
+                {o.label}
+                {o.hint && <span className="font-sans text-xs font-semibold text-grape-soft">{o.hint}</span>}
+              </button>
+            );
+          })}
         </div>
       ),
     },
@@ -363,12 +401,13 @@ export function OrderWizard() {
             {[
               { k: "Glavni junak", v: name, at: 0 },
               { k: "Uzrast", v: age ? ageLabel(age) : "—", at: 1 },
-              { k: "Voli", v: themes.find((t) => t.id === theme)?.label ?? "—", at: 2 },
-              { k: "Crtani", v: <>{pick.name} · <span className="whitespace-nowrap">{pick.from ? "od " : ""}{formatPrice(pick.price)}</span></>, at: 3 },
+              { k: "Povod", v: occ?.label ?? "—", at: 2 },
+              { k: "Voli", v: themes.find((t) => t.id === theme)?.label ?? "—", at: 3 },
+              { k: "Crtani", v: <>{pick.name} · <span className="whitespace-nowrap">{pick.from ? "od " : ""}{formatPrice(pick.price)}</span></>, at: 4 },
               {
                 k: "Dodaci",
                 v: [date && `do ${formatDate(date)}`, express && "ekspresno"].filter(Boolean).join(", ") || "—",
-                at: 4,
+                at: 5,
               },
             ].map((r) => (
               <div key={r.k} className="flex items-center gap-3 py-3">
@@ -424,7 +463,7 @@ export function OrderWizard() {
               value={note}
               maxLength={1500}
               onChange={(e) => edited(setNote)(e.target.value)}
-              placeholder="Omiljena igračka, ljubimac, drugari koje treba da sretne u priči…"
+              placeholder={occ?.note ?? "Omiljena igračka, ljubimac, drugari koje treba da sretne u priči…"}
               className="mt-1.5 w-full resize-none rounded-2xl border-[3px] border-grape bg-white px-4 py-3 text-lg outline-none placeholder:text-grape/35 focus-visible:shadow-[4px_4px_0_0_var(--color-coral-deep)]"
             />
           </div>

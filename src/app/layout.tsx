@@ -26,7 +26,7 @@ const body = Nunito({
 
 const title = "Vaky Kids — crtani film u kojem je vaše dijete glavni junak";
 const description =
-  "Crtani film sa imenom vašeg djeteta, pričom o onome što voli i naracijom na našem jeziku. Poklon za rođendan koji se pamti.";
+  "Crtani film sa imenom vašeg djeteta, pričom o onome što voli i naracijom na našem jeziku. Za rođendan, praznik ili bilo koji važan trenutak.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),

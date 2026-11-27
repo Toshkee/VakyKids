@@ -49,8 +49,8 @@ const stories: Story[] = [
     art: () => null,
   },
   {
-    title: "Pustite ga na rođendanu",
-    text: "Na televizoru, projektoru u igraonici ili telefonu. I gledajte mu lice.",
+    title: "Pustite ga u pravom trenutku",
+    text: "Na rođendanu, za praznik ili pred spavanje. Na televizoru, projektoru ili telefonu. I gledajte mu lice.",
     bg: "url(/video/story-cake.webp) center / cover",
     art: () => null,
   },
